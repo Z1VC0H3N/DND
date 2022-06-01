@@ -1,10 +1,10 @@
 package TILE;
 
 public class tile {
-    private char tile;
-    private int x;
-    private int y;
-    private String name;
+    protected char tile;
+    protected int x;
+    protected int y;
+    protected String name;
     public String description;
 
     public tile(char tile,int x,int y , String name){

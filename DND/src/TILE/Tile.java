@@ -1,16 +1,16 @@
 package TILE;
 
-public class tile {
+import UTILITY.Position;
+
+public class Tile {
     protected char tile;
-    protected int x;
-    protected int y;
+    protected Position position;
     protected String name;
     public String description;
 
-    public tile(char tile,int x,int y , String name){
+    public Tile(char tile, int x, int y , String name){
         this.tile=tile;
-        this.x=x;
-        this.y=y;
+        this.position=new Position(x,y);
         this.name=name;
     }
     public char getSign(){
@@ -20,19 +20,22 @@ public class tile {
         return name;
     }
     public int getX(){
-        return x;
+        return position.getX();
     }
     public int getY(){
-        return y;
+        return position.getY();
     }
     public void setX(int newX){
-        this.x=newX;
+        position.setX(newX);
     }
     public void setY(int newY){
-        this.y=newY;
+       position.setY(newY);
     }
     public void setSign(char sign){
         this.tile=sign;
+    }
+    public String toString(){
+        return String.valueOf((char) tile);
     }
 
 }

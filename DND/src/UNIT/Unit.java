@@ -1,14 +1,15 @@
 package UNIT;
 
-import utility.Health;
+import TILE.Tile;
+import UTILITY.Health;
 
-public class Unit extends TILE.tile {
+public class Unit extends Tile {
     protected Health health;
     protected int attack;
     protected int defense;
 
     public Unit(int x, int y, String name,int healthPool,int healthAmount,int attack,int defense) {
-        super((char)65, x, y, name);
+        super((char)64, x, y, name);
         this.health=new Health(healthAmount, healthPool);
         this.attack=attack;
         this.defense=defense;

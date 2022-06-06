@@ -1,6 +1,6 @@
 package PlayerTypes;
 
-import TILE.tile;
+import TILE.Tile;
 import UNIT.Enemy;
 import UNIT.Player;
 
@@ -20,11 +20,11 @@ public class Warrior extends Player {
         this.abilityCooldown=abilityCooldown;
         remainingCooldown=0;
     }
-    public String onAbilityCastAttempt(Enemy[] enemies , tile[][] board) {
+    public String onAbilityCastAttempt(Enemy[] enemies , Tile[][] board) {
             //todo;
             return "";
     }
-    public String cast(Enemy e ,tile[][] board) {
+    public String cast(Enemy e , Tile[][] board) {
         remainingCooldown=abilityCooldown;
         health.setHealthAmount(Math.min(health.getHealthAmount()+10*defense,health.getHealthPool()));
         //todo;

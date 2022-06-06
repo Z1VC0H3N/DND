@@ -1,6 +1,6 @@
 package PlayerTypes;
 
-import TILE.tile;
+import TILE.Tile;
 import UNIT.Enemy;
 import UNIT.Player;
 
@@ -71,7 +71,7 @@ public class Mage extends Player {
         return abilityRange;
     }
 
-    public String cast(Enemy e , TILE.tile[][] board) {
+    public String cast(Enemy e , Tile[][] board) {
         //todo;
         //hits ← 0
         //while (hits < hits count) ∧ (∃ living enemy s.t. range(enemy, player) < ability range) do
@@ -81,7 +81,7 @@ public class Mage extends Player {
         //- hits ← hits + 1
         return "";
     }
-    public String onAbilityCastAttempt(Enemy[] enemies ,TILE.tile[][] board) {
+    public String onAbilityCastAttempt(Enemy[] enemies , Tile[][] board) {
         return "";
         //todo;
     }

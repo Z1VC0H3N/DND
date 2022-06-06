@@ -26,6 +26,9 @@ public class Board {
         parseFile(level);
         this.numOfHero = numOfPlayer;
     }
+    public Board(File f,Player p){
+        //todo;
+    }
 
     public Player chooseHero(int numOfPlayer, int x, int y) {
         switch (numOfPlayer) {
@@ -135,6 +138,9 @@ public class Board {
 	public Player getPlayer() {
 		return hero;
 	}
+	public boolean isAlive(){
+        return hero.getHealthAmount()>0;
+    }
 
 	public int getNumOfEnemies() {
 		return numOfEnemy;

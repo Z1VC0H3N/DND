@@ -32,21 +32,21 @@ public class Board {
 
     public Player chooseHero(int numOfPlayer, int x, int y) {
         switch (numOfPlayer) {
-            case (1):
-                hero = new JonSnow();
-            case (2):
-                hero = new TheHound();
-            case (3):
-                hero = new Melisandre();
-            case (4):
-                hero = new ThorosOfMyr();
-            case (5):
-                hero = new AryaStark();
-            case (6):
-                hero = new Bronn();
-            case (7):
-                hero = new Ygritte();
-                // needs to add to the hero the location;
+//            case (1):
+//                hero = new JonSnow();
+//            case (2):
+//                hero = new TheHound();
+//            case (3):
+//                hero = new Melisandre();
+//            case (4):
+//                hero = new ThorosOfMyr();
+//            case (5):
+//                hero = new AryaStark();
+//            case (6):
+//                hero = new Bronn();
+//            case (7):
+//                hero = new Ygritte();
+//                // needs to add to the hero the location;
         }
         return null;
     }
@@ -79,42 +79,42 @@ public class Board {
     }
 
     private Tile getTile(char charAt, int idx, int idy) {
-        switch (charAt) {
-            case ('.'):
-                return new EmptyTile(idx, idy);
-            case ('#'):
-                return new Wall(idx, idy);
-            case ('@'):
-                return chooseHero(numOfHero, idx, idy);
-            case ('s'):
-                numOfEnemy++;
-                enemies.add(new LannisterSolider());// dont know why maybe we will know
-                return new LannisterSolider();
-            case ('k'):
-                return new LannisterKnight();
-            case ('q'):
-                return new QueensGuard();
-            case ('z'):
-                return new Wright();
-            case ('b'):
-                return new BearWright();
-            case ('g'):
-                return new GiantWright();
-            case ('w'):
-                return new WhiteWalker();
-            case ('M'):
-                return new TheMountain();
-            case ('C'):
-                return new QueenCersei();
-            case ('K'):
-                return new NightsKing();
-            case ('B'):
-                return new BonusTrap();
-            case ('Q'):
-                return new QueensTrap();
-            case ('D'):
-                return new DeathTrap();
-        }
+//        switch (charAt) {
+//            case ('.'):
+//                return new EmptyTile(idx, idy);
+//            case ('#'):
+//                return new Wall(idx, idy);
+//            case ('@'):
+//                return chooseHero(numOfHero, idx, idy);
+//            case ('s'):
+//                numOfEnemy++;
+//                enemies.add(new LannisterSolider());// dont know why maybe we will know
+//                return new LannisterSolider();
+//            case ('k'):
+//                return new LannisterKnight();
+//            case ('q'):
+//                return new QueensGuard();
+//            case ('z'):
+//                return new Wright();
+//            case ('b'):
+//                return new BearWright();
+//            case ('g'):
+//                return new GiantWright();
+//            case ('w'):
+//                return new WhiteWalker();
+//            case ('M'):
+//                return new TheMountain();
+//            case ('C'):
+//                return new QueenCersei();
+//            case ('K'):
+//                return new NightsKing();
+//            case ('B'):
+//                return new BonusTrap();
+//            case ('Q'):
+//                return new QueensTrap();
+//            case ('D'):
+//                return new DeathTrap();
+//        }
         return null;
     }
 	public String getBoard(int i) {
@@ -145,6 +145,8 @@ public class Board {
 	public int getNumOfEnemies() {
 		return numOfEnemy;
 	}
-
+    public String getStringOfTile(int x,int y){
+        return units.get(length*x+y).toString();
+    }
 
 }

@@ -19,8 +19,8 @@ public class Mage extends Player {
     private int hitsCount;//maximal number of times a single cast of the ability can hit
     private int abilityRange;
 
-    public Mage(int x, int y, String name, int healthPool, int healthAmount, int attack, int defense,int abilityCooldown,int manaPool,int manaCost,int hitsCount,int abilityRange) {
-        super(x, y, name, healthPool, healthAmount, attack, defense, "Blizzard");
+    public Mage(int x, int y, char tile,String name, int healthPool, int healthAmount, int attack, int defense,int abilityCooldown,int manaPool,int manaCost,int hitsCount,int abilityRange) {
+        super(x, y,name, healthPool, healthAmount, attack, defense, "Blizzard");
         this.manaPool=manaPool;
         this.currentMana=manaPool/4;
         this.abilityCooldown=abilityCooldown;

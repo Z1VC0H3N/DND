@@ -1,12 +1,17 @@
 package UNIT;
 
+import EnemyTypes.Trap;
+import TILE.Tile;
+
+import java.util.LinkedList;
+
 public class Player extends Unit{
     protected int exp;
     protected int playerLevel;
     protected String specialAbility;
 
-    public Player(int x, int y, String name, int healthPool, int healthAmount, int attack, int defense,String specialAbility) {
-        super(x, y, name, healthPool, healthAmount, attack, defense);
+    public Player(int x, int y,String name, int healthPool, int healthAmount, int attack, int defense,String specialAbility) {
+        super(x, y,'@', name, healthPool, healthAmount, attack, defense);
         this.exp=0;
         this.playerLevel=1;
         this.specialAbility=specialAbility;
@@ -27,7 +32,11 @@ public class Player extends Unit{
     public String description() {
         return "HealthAmount:"+this.health.getHealthAmount()+" AttackPower:"+this.attack+" DefencePower:"+this.defense+" Experience:"+this.exp;
     }
-    public String attack(){
+    public String attack(Enemy e, LinkedList<Tile> board){
+        //todo;
+        return "";
+    }
+    public String attack(Trap t, LinkedList<Tile> board){
         //todo;
         return "";
     }

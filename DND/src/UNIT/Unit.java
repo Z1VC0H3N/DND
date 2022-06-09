@@ -1,20 +1,19 @@
 package UNIT;
 
 import TILE.Tile;
-import UTILITY.Health;
 
 public class Unit extends Tile {
     protected Health health;
     protected int attack;
     protected int defense;
 
-    public Unit(int x, int y, String name,int healthPool,int healthAmount,int attack,int defense) {
-        super((char)64, x, y, name);
+    public Unit(int x, int y,char tile, String name,int healthPool,int healthAmount,int attack,int defense) {
+        super(tile, x, y, name);
         this.health=new Health(healthAmount, healthPool);
         this.attack=attack;
         this.defense=defense;
     }
-    public double range(Unit other){
+    public double range(Tile other){
         return Math.sqrt(Math.pow((this.getX()-other.getX()), 2)+Math.pow((this.getY()-other.getY()), 2));
     }
     public int getHealthPool(){

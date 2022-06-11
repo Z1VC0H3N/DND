@@ -4,7 +4,7 @@ package Interactions;
 import EnemyTypes.Monster;
 import EnemyTypes.Trap;
 import TILE.*;
-import UNIT.*;
+import EnemyTypes.UNIT.*;
 
 import java.util.LinkedList;
 

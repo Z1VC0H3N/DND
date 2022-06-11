@@ -1,16 +1,11 @@
 package il.co.test;
 
 import EnemyTypes.Monster;
-import GAME.Board;
-import TILE.EmptyTile;
 import TILE.Tile;
 import TILE.Wall;
-import UNIT.Player;
-import UTILITY.Graph;
+import EnemyTypes.UNIT.Player;
 import UTILITY.Position;
 
-import java.io.File;
-import java.lang.management.GarbageCollectorMXBean;
 import java.util.*;
 
 public class Main {
@@ -84,10 +79,7 @@ public class Main {
 //            startGame();
 //        }
 //    }
-        for(int i=0;i<50;i++) {
-            int x = new Random().nextInt(4 + 1);
-            System.out.println(x);
-        }
+
         LinkedList<Tile> board = new LinkedList<>();
         for(int i=0;i<5;i++){
             for(int j=0;j<5;j++){
@@ -120,7 +112,7 @@ public class Main {
             i++;
         }
 
-        Graph g=m.getGraph(m,p,board);
+        m.setShortPaths(m,board);
         System.out.println(p.getPosition().getShortestPath());
     }
 

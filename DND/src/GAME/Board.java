@@ -1,10 +1,8 @@
 package GAME;
 
-import TILE.EmptyTile;
 import TILE.Tile;
-import TILE.Wall;
-import UNIT.Enemy;
-import UNIT.Player;
+import EnemyTypes.UNIT.Enemy;
+import EnemyTypes.UNIT.Player;
 
 import java.io.*;
 import java.util.ArrayList;

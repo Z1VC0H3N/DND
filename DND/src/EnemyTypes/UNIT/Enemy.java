@@ -1,8 +1,4 @@
-package UNIT;
-
-import TILE.Tile;
-
-import java.util.LinkedList;
+package EnemyTypes.UNIT;
 
 public class Enemy extends Unit  {
     protected int experience;

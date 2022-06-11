@@ -3,8 +3,8 @@ package EnemyTypes;
 import Interactions.Visited;
 import Interactions.Visitor;
 import TILE.Tile;
-import UNIT.Enemy;
-import UNIT.Player;
+import EnemyTypes.UNIT.Enemy;
+import EnemyTypes.UNIT.Player;
 
 import java.util.LinkedList;
 

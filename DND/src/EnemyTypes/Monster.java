@@ -4,15 +4,14 @@ import GAME.Board;
 import Interactions.Visited;
 import Interactions.Visitor;
 import TILE.Tile;
-import UNIT.Enemy;
-import UNIT.Player;
+import EnemyTypes.UNIT.Enemy;
+import EnemyTypes.UNIT.Player;
 import UTILITY.Graph;
 import UTILITY.Position;
 import UTILITY.QueueAsLinkedList;
 
 
 import java.util.*;
-import java.util.concurrent.TimeUnit;
 
 public class Monster extends Enemy implements Visited {
     public Monster(int x, int y, int healthPool, int healthAmount, int attack, int defense,int exp,int visionRange) {
@@ -30,7 +29,7 @@ public class Monster extends Enemy implements Visited {
     }
     public Position preformMovement(Player p,LinkedList<Tile> board, Board game){
       if(range(p)<visionRange){
-          getGraph(this,p,board);// evaluated shortest path
+          setShortPaths(this,board);// evaluated shortest path
           if(p.getPosition().getShortestPath().isEmpty()){
               return this.position;
           }
@@ -57,7 +56,7 @@ public class Monster extends Enemy implements Visited {
       return null;
     }
 
-    public Graph getGraph(Monster monster, Player p, LinkedList<Tile> board) {
+    public void setShortPaths(Monster monster, LinkedList<Tile> board) {
         Set<Position> set = new HashSet<>();
         QueueAsLinkedList<Tile> queue = new QueueAsLinkedList<Tile>();
         LinkedList<Tile> inRange = new LinkedList<>();
@@ -85,6 +84,6 @@ public class Monster extends Enemy implements Visited {
             set.add(t.getPosition());
         }
         Graph g = new Graph(set);
-        return g.calculateShortestPathFromSource(g,monster.position);
+        g.calculateShortestPathFromSource(g,monster.position);
     }
 }

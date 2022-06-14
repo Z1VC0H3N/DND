@@ -4,8 +4,8 @@ import GAME.Board;
 import Interactions.Visited;
 import Interactions.Visitor;
 import TILE.Tile;
-import EnemyTypes.UNIT.Enemy;
-import EnemyTypes.UNIT.Player;
+import UNIT.Enemy;
+import UNIT.Player;
 import UTILITY.Graph;
 import UTILITY.Position;
 import UTILITY.QueueAsLinkedList;
@@ -14,8 +14,10 @@ import UTILITY.QueueAsLinkedList;
 import java.util.*;
 
 public class Monster extends Enemy implements Visited {
+    protected int visionRange;
     public Monster(int x, int y, int healthPool, int healthAmount, int attack, int defense,int exp,int visionRange) {
-        super(x, y, 'W', "monster", healthPool, healthAmount, attack, defense,exp,visionRange);
+        super(x, y, 'W', "monster", healthPool, healthAmount, attack, defense,exp);
+        this.visionRange=visionRange;
     }
 
     @Override

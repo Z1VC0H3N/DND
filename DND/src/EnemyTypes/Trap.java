@@ -3,8 +3,8 @@ package EnemyTypes;
 import Interactions.Visited;
 import Interactions.Visitor;
 import TILE.Tile;
-import EnemyTypes.UNIT.Enemy;
-import EnemyTypes.UNIT.Player;
+import UNIT.Enemy;
+import UNIT.Player;
 
 import java.util.LinkedList;
 
@@ -13,8 +13,8 @@ public class Trap extends Enemy implements Visited {
     protected int inVisibilityTime;
     protected int ticksCount=0;
     protected boolean visible=true;
-    public Trap(int x,int y,int healthPool, int attack, int defence, int expValue,int visionRange,int visibilityTime,int inVisibilityTime ) {
-        super(x,y,'Q',"trap",healthPool,healthPool,attack,defence,expValue,visionRange);
+    public Trap(int x,int y,int healthPool, int attack, int defence, int expValue,int visibilityTime,int inVisibilityTime ) {
+        super(x,y,'Q',"trap",healthPool,healthPool,attack,defence,expValue);
         this.visibilityTime=visibilityTime;
         this.inVisibilityTime=inVisibilityTime;
     }

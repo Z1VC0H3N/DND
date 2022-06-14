@@ -1,11 +1,16 @@
 package il.co.test;
 
-import EnemyTypes.Monster;
-import TILE.Tile;
-import TILE.Wall;
-import EnemyTypes.UNIT.Player;
-import UTILITY.Position;
+import EnemyTypes.*;
+import GAME.Board;
+import Rogues.*;
+import TILE.*;
+import UNIT.*;
+import UTILITY.*;
+import Hunters.*;
+import Mages.*;
+import Warriors.*;
 
+import java.io.File;
 import java.util.*;
 
 public class Main {
@@ -16,30 +21,30 @@ public class Main {
     }
 
     public static void startGame() {
-//        boolean makeMistake=false;
-//        Player[] playerSet = {new JonSnow(), new TheHound(), new Melisandre(), new ThorosOfMyr(), new AryaStark(), new Bronn(), new Ygritte()};
-//        File[] levels = {new File("\"C:\\Users\\Owner\\BGU\\oop\\hw3\\levels_dir\\level1.txt\""), new File("\"C:\\Users\\Owner\\BGU\\oop\\hw3\\levels_dir\\level2.txt\""), new File("\"C:\\Users\\Owner\\BGU\\oop\\hw3\\levels_dir\\level3.txt\""), new File("\"C:\\Users\\Owner\\BGU\\oop\\hw3\\levels_dir\\level4.txt\"")};
-//        int levelIdx = 0;
-//        System.out.println("Select Player: ");
-//        for (Player p : playerSet) {
-//            System.out.println(p.data());
-//        }
-//        Scanner scanner = new Scanner(System.in);
-//        String str = "";
-//        String choiceStr = "";
-//        int choice = 0;
-//        try {
-//            choiceStr = scanner.next();
-//            choice = Integer.parseInt(choiceStr);
-//        } catch (Exception e) {
-//            System.out.println("you must enter only 1 digit number");
-//            startGame();
-//        }
-//        try {
-//            Board board = new Board(levels[levelIdx], choice);
-//            board.startGame();
-//            while(board.isAlive())
-//            {
+        boolean makeMistake=false;
+        Player[] playerSet = {new JonSnow(0,0), new TheHound(0,0), new Melisandre(0,0), new ThorosOfMyr(0,0), new AryaStark(0,0), new Bronn(0,0), new Ygritte(0,0)};
+         File[] levels = {new File("\"C:\\Users\\Owner\\BGU\\oop\\hw3\\levels_dir\\level1.txt\""), new File("\"C:\\Users\\Owner\\BGU\\oop\\hw3\\levels_dir\\level2.txt\""), new File("\"C:\\Users\\Owner\\BGU\\oop\\hw3\\levels_dir\\level3.txt\""), new File("\"C:\\Users\\Owner\\BGU\\oop\\hw3\\levels_dir\\level4.txt\"")};
+        int levelIdx = 0;
+        System.out.println("Select Player: ");
+        for (Player p : playerSet) {
+            System.out.println(p.description());
+        }
+        Scanner scanner = new Scanner(System.in);
+        String str = "";
+        String choiceStr = "";
+        int choice = 0;
+        try {
+            choiceStr = scanner.next();
+            choice = Integer.parseInt(choiceStr);
+        } catch (Exception e) {
+            System.out.println("you must enter only 1 digit number");
+            startGame();
+        }
+        try {
+            Board board = new Board(levels[levelIdx], choice);
+            board.startGame();
+            while(board.isAlive())
+            {
 //                try {
 //                    choiceStr = scanner.next();
 //                } catch (Exception e) {
@@ -72,13 +77,13 @@ public class Main {
 //                        board = new Board(levels[levelIdx],board.getPlayer());
 //                    }
 //                }
-//
-//            }
-//        } catch (Exception e){
-//            System.out.println("something went wrong");
-//            startGame();
-//        }
-//    }
+
+            }
+        } catch (Exception e){
+            System.out.println("something went wrong");
+            startGame();
+        }
+
 
         LinkedList<Tile> board = new LinkedList<>();
         for(int i=0;i<5;i++){

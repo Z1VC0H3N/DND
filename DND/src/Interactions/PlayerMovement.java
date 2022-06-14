@@ -5,8 +5,8 @@ import EnemyTypes.Trap;
 import TILE.EmptyTile;
 import TILE.Tile;
 import TILE.Wall;
-import EnemyTypes.UNIT.Enemy;
-import EnemyTypes.UNIT.Player;
+import UNIT.Enemy;
+import UNIT.Player;
 import UTILITY.Position;
 
 import java.util.LinkedList;
@@ -37,7 +37,7 @@ public class PlayerMovement extends Movement{
     }
 
     @Override
-    public String visit(Enemy[] enemies, LinkedList<Tile> board) {
+    public String visit(LinkedList<Enemy> enemies, LinkedList<Tile> board) {
         return null;
     }
 

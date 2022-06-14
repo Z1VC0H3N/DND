@@ -1,8 +1,8 @@
 package PlayerTypes;
 
 import TILE.Tile;
-import EnemyTypes.UNIT.Enemy;
-import EnemyTypes.UNIT.Player;
+import UNIT.Enemy;
+import UNIT.Player;
 
 /**
  * Special ability: Fan of Knives, hits everyone around the rogue for an amount equals to the

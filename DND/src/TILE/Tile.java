@@ -6,7 +6,7 @@ public class Tile {
     protected char tile;
     protected Position position;
     protected String name;
-    public String description;
+
 
     public Tile(char tile, int x, int y , String name){
         this.tile=tile;

@@ -1,11 +1,11 @@
-package EnemyTypes.UNIT;
+package UNIT;
 
 public class Enemy extends Unit  {
     protected int experience;
-    protected int visionRange;
-    public Enemy(int x, int y, char tile,String name, int healthPool, int healthAmount, int attack, int defense,int experience,int visionRange) {
+
+    public Enemy(int x, int y, char tile,String name, int healthPool, int healthAmount, int attack, int defense,int experience) {
         super(x, y, tile,name, healthPool, healthAmount, attack, defense);
-        this.visionRange=visionRange;
+        this.experience=experience;
     }
 
     public int getExperience(){return experience;}
@@ -15,5 +15,9 @@ public class Enemy extends Unit  {
     public String attack(Player p){
         //todo;
         return "";
+    }
+
+    public int[] death() {
+        return new int[]{experience,getX(),getY()};
     }
 }

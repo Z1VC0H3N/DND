@@ -1,9 +1,12 @@
 package GAME;
 
+import Hunters.Ygritte;
 import TILE.Tile;
-import EnemyTypes.UNIT.Enemy;
-import EnemyTypes.UNIT.Player;
-
+import UNIT.Enemy;
+import UNIT.Player;
+import Warriors.*;
+import Mages.*;
+import Rogues.*;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -30,21 +33,21 @@ public class Board {
 
     public Player chooseHero(int numOfPlayer, int x, int y) {
         switch (numOfPlayer) {
-//            case (1):
-//                hero = new JonSnow();
-//            case (2):
-//                hero = new TheHound();
-//            case (3):
-//                hero = new Melisandre();
-//            case (4):
-//                hero = new ThorosOfMyr();
-//            case (5):
-//                hero = new AryaStark();
-//            case (6):
-//                hero = new Bronn();
-//            case (7):
-//                hero = new Ygritte();
-//                // needs to add to the hero the location;
+            case (1):
+                hero = new JonSnow(x,y);
+            case (2):
+                hero = new TheHound(x,y);
+            case (3):
+                hero = new Melisandre(x,y);
+            case (4):
+                hero = new ThorosOfMyr(x,y);
+            case (5):
+                hero = new AryaStark(x,y);
+            case (6):
+                hero = new Bronn(x,y);
+            case (7):
+                hero = new Ygritte(x,y);
+                // needs to add to the hero the location;
         }
         return null;
     }
@@ -147,4 +150,6 @@ public class Board {
         return units.get(length*x+y).toString();
     }
 
+    public void startGame() {
+    }
 }

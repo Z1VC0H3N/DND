@@ -1,4 +1,4 @@
-package EnemyTypes.UNIT;
+package UNIT;
 
 import EnemyTypes.Trap;
 import TILE.Tile;

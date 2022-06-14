@@ -1,8 +1,8 @@
 package PlayerTypes;
 
 import TILE.Tile;
-import EnemyTypes.UNIT.Enemy;
-import EnemyTypes.UNIT.Player;
+import UNIT.Enemy;
+import UNIT.Player;
 
 /**
  * Special ability: Avenger’s Shield, randomly hits one enemy withing range < 3 for an amount

@@ -1,4 +1,4 @@
-package EnemyTypes.UNIT;
+package UNIT;
 
 import TILE.Tile;
 import UTILITY.Health;

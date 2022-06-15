@@ -79,4 +79,6 @@ public class Mage extends Player {
     public void gameTick() {
        currentMana=Math.min(manaPool,currentMana+playerLevel);
     }
+    public String description(){
+        return super.description()+" Mana :" +this.currentMana+"/"+this.manaPool+" Spell Power :"+spellPower;    }
 }

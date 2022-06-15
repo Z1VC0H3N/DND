@@ -1,11 +1,13 @@
 package UNIT;
 
 import EnemyTypes.Trap;
+import Interactions.Visited;
+import Interactions.Visitor;
 import TILE.Tile;
 
 import java.util.LinkedList;
 
-public class Player extends Unit{
+public class Player extends Unit implements Visited {
     protected int exp;
     protected int playerLevel;
     protected String specialAbility;
@@ -30,7 +32,7 @@ public class Player extends Unit{
         return "";
     }
     public String description() {
-        return "HealthAmount:"+this.health.getHealthAmount()+" AttackPower:"+this.attack+" DefencePower:"+this.defense+" Experience:"+this.exp;
+        return this.name+"  "+"Health:"+this.health.getHealthAmount()+"/"+ getHealthPool()+" Attack : "+this.attack+" Defence : "+this.defense+ " Level : "+this.playerLevel+" Experience : "+this.exp +"/50";
     }
     public String attack(Enemy e, LinkedList<Tile> board){
         //todo;
@@ -42,6 +44,14 @@ public class Player extends Unit{
     }
 
 
+    @Override
+    public String accept(Visitor v, LinkedList<Tile> board) {
+        return v.visit(this, board);
+    }
 
+    @Override
+    public void gameTick() {
+
+    }
 
 }

@@ -4,7 +4,7 @@ import Interactions.PlayerMovement;
 import PlayerTypes.Hunter;
 import TILE.EmptyTile;
 import TILE.Tile;
-import UNIT.Enemy;
+import UNIT.*;
 
 import java.util.LinkedList;
 
@@ -25,7 +25,7 @@ public class Ygritte extends Hunter {
         return ans;
     }
     public String description(){
-        String s=this.name+"      HealthAmout:"+this.health.getHealthAmount()+"/"+this.health.getHealthPool()+" AttackPower:"+this.attack+" DefencePower:"+this.defense+" Level:"+this.playerLevel+" Experience:"
+        String s=this.name+" HealthAmount:"+this.health.getHealthAmount()+"/"+this.health.getHealthPool()+" Attack:"+this.attack+" Defence:"+this.defense+" Level:"+this.playerLevel+" Experience:"
                 +this.exp+"/"+(50*this.playerLevel)+" arrows:"+this.arrows;
         return s;
     }

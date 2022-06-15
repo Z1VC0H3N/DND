@@ -52,4 +52,7 @@ public class Warrior extends Player {
         //todo;
         return "";
     }
+    public String description(){
+        return super.description() + " Cooldown : "+remainingCooldown+"/"+abilityCooldown;
+    }
 }

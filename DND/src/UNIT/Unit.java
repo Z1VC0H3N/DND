@@ -1,7 +1,6 @@
 package UNIT;
 
 import TILE.Tile;
-import UTILITY.Health;
 
 public class Unit extends Tile {
     protected Health health;

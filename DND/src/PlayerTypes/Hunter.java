@@ -14,4 +14,8 @@ public class Hunter extends Player {
         this.arrows =10*this.playerLevel;
         this.ticks=0;
     }
+    public String description(){
+        return super.description()+" Arrows :"+this.arrows+" Range:"+this.abilityRange;
+    }
+    public void gameTick(){}
 }

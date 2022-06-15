@@ -36,4 +36,7 @@ public class Rogue extends Player {
     public void gameTick(){
         energy=Math.min(energy+90,100);
     }
+    public String description(){
+        return super.description()+ " Energy: "+energy+"/100";
+    }
 }

@@ -1,4 +1,4 @@
-package UTILITY;
+package UNIT;
 
 public class Health {
     private int healthPool;

@@ -1,20 +1,8 @@
-package il.co.test;
+package UI;
 
-import EnemyTypes.*;
-import GAME.Board;
-import Rogues.*;
-import TILE.*;
 import UI.RunGame;
-import UNIT.*;
-import UTILITY.*;
-import Hunters.*;
-import Mages.*;
-import Warriors.*;
 
-import javax.swing.plaf.synth.SynthRootPaneUI;
-import java.io.File;
 import java.io.IOException;
-import java.util.*;
 
 public class Main {
 

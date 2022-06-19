@@ -30,32 +30,51 @@ public class Monster extends Enemy implements Visited {
 
     }
     public Position preformMovement(Player p,LinkedList<Tile> board, Board game){
-      if(range(p)<visionRange){
-          setShortPaths(this,board);// evaluated shortest path
-          if(p.getPosition().getShortestPath().isEmpty()){
-              return this.position;
+      if(this.range(p)<visionRange){
+          Position pos =close(p,board);
+          if(pos!=null){
+              return pos;
           }
-          return p.getPosition().getShortestPath().get(1);
-      }
+          setShortPaths(this,board);// evaluated shortest path
+          if(!p.getPosition().getShortestPath().isEmpty()){
+              p.getPosition().addDistance(p.getPosition());
+              Position out =p.getPosition().getShortestPath().get(1);
+              for(Tile t:board){
+                  if(range(t)<visionRange){
+                      t.getPosition().clearPath();
+                  }
+              }
+              return out;
+          }
+          }
+
         int x = new Random().nextInt(4 + 1);
         switch (x){
             case 0:
                 return this.getPosition();
             case 1://up
-
-                if (!game.getStringOfTile(this.getX() - 1, this.getY()).equals("#"))
-                    return new Position(this.getX() - 1, this.getY());
-            case 2://right
-                if(!game.getStringOfTile(this.getX() , this.getY()+1).equals("#"))
-                    return new Position(this.getX() , this.getY()+1);
-            case 3://down
-                if(!game.getStringOfTile(this.getX()+1, this.getY()+1).equals("#"))
-                    return new Position(this.getX()+1, this.getY());
-            case 4://left
-                if(!game.getStringOfTile(this.getX() , this.getY()-1).equals("#"))
+                if (!game.getStringOfTile(this.getX() , this.getY()-1).equals("#"))
                     return new Position(this.getX() , this.getY()-1);
+            case 2://right
+                if(!game.getStringOfTile(this.getX()+1 , this.getY()).equals("#"))
+                    return new Position(this.getX() +1, this.getY());
+            case 3://down
+                if(!game.getStringOfTile(this.getX(), this.getY()+1).equals("#"))
+                    return new Position(this.getX(), this.getY()+1);
+            case 4://left
+                if(!game.getStringOfTile(this.getX() -1, this.getY()).equals("#"))
+                    return new Position(this.getX()-1 , this.getY());
         }
-      return null;
+      return this.position;
+    }
+
+    private Position close(Player p, LinkedList<Tile> board) {
+        for(Tile t: board){
+            if(this.range(t)<=1 & t.getPosition().equals(p.getPosition())){
+                return t.getPosition();
+            }
+        }
+        return null;
     }
 
     public void setShortPaths(Monster monster, LinkedList<Tile> board) {

@@ -21,6 +21,6 @@ public class Health {
         return healthAmount;
     }
     public String toString(){
-        return "healthAmount: "+healthAmount +", healthPool: "+healthPool;
+        return " healthAmount: "+healthAmount +" healthPool: "+healthPool;
     }
 }

@@ -20,7 +20,7 @@ public class Ygritte extends Hunter {
             this.arrows = arrows+10*playerLevel;
             this.attack = attack +2*playerLevel;
             this.defense = defense +playerLevel;
-            ans =this.name +" reached level " + this.playerLevel +" and has Health:" +health.toString() +" attack : "+attack + " defence : "+defense +" arrows: "+arrows;
+            ans =this.name +" reached level " + this.playerLevel +" and has Health : " +health.toString() +" attack : "+attack + " defence : "+defense +"  arrows: "+arrows;
         }
         return ans;
     }

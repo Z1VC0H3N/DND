@@ -1,9 +1,9 @@
 package UI;
 
-import EnemyTypes.Monster;
-import EnemyTypes.Trap;
+import EnemyTypes.*;
 import GAME.Board;
-import GAME.MoveOrder;
+import Interactions.EnemyMovement;
+import Interactions.MoveOrder;
 import Hunters.Ygritte;
 import Interactions.PlayerMovement;
 import Interactions.Visited;
@@ -11,8 +11,6 @@ import Mages.Melisandre;
 import Mages.ThorosOfMyr;
 import Rogues.AryaStark;
 import Rogues.Bronn;
-import TILE.Tile;
-import TILE.Wall;
 import UNIT.Enemy;
 import UNIT.Player;
 import UTILITY.Position;
@@ -21,10 +19,9 @@ import Warriors.TheHound;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashSet;
+import java.util.ConcurrentModificationException;
 import java.util.LinkedList;
 import java.util.Scanner;
-import java.util.Set;
 
 public class RunGame {
   private MoveOrder moveOrder =new MoveOrder();
@@ -41,15 +38,15 @@ public class RunGame {
 
   public void startGame(String[] args) throws IOException {
       levelsPath = new File(args[0]);
-      myLevel =new File(String.valueOf(levelsPath.getCanonicalFile()));
+      myLevel = new File(String.valueOf(levelsPath.getCanonicalFile()));
       levels = myLevel.listFiles(); // gets all levels from folder levels
-      boolean makeMistake=false;
-      Player[] playerSet = {new JonSnow(0,0), new TheHound(0,0), new Melisandre(0,0), new ThorosOfMyr(0,0), new AryaStark(0,0), new Bronn(0,0), new Ygritte(0,0)};
+      boolean makeMistake = false;
+      Player[] playerSet = {new JonSnow(0, 0), new TheHound(0, 0), new Melisandre(0, 0), new ThorosOfMyr(0, 0), new AryaStark(0, 0), new Bronn(0, 0), new Ygritte(0, 0)};
       int levelIdx = 0;
-      int x=1;
+      int x = 1;
       System.out.println("Select Player: ");
       for (Player p : playerSet) {
-          System.out.println("\t"+x+". " +p.description());
+          System.out.println("\t" + x + ". " + p.description());
           x++;
       }
       Scanner scanner = new Scanner(System.in);
@@ -63,98 +60,196 @@ public class RunGame {
           System.out.println("you must enter only 1 digit number");
           startGame(args);
       }
-      if(choice<1 | choice>7){
+      if (choice < 1 | choice > 7) {
           System.out.println("you must enter 1 to 7");
           startGame(args);
       }
       System.out.println("You have selected:");
-      System.out.println(playerSet[choice-1].getName());
-      b =new Board(levels[0],choice-1);
+      System.out.println(playerSet[choice - 1].getName());
+      b = new Board(levels[0], choice);
       System.out.println(b.toString());
-      p=b.getPlayer();
-      endGame =b.isAlive();// need to be changed
-      monsters =b.getMonsters();
-      traps =b.getTraps();
+      p = b.getPlayer();
+      endGame = b.isAlive();// need to be changed
+      monsters = b.getMonsters();
+      traps = b.getTraps();
       totalEnemies = new LinkedList<>();
-      totalEnemies.addAll(monsters);
-      totalEnemies.addAll(traps);
+      for (Monster m : monsters) {
+          totalEnemies.addLast(m);
+      }
+      for (Trap t : traps) {
+          totalEnemies.addLast(t);
+      }
       moveOrder.addObservers(p);
-      for(Trap t :traps){
+      for (Trap t : traps) {
           moveOrder.addObservers(t);
       }
-      for(Monster m : monsters){
+      for (Monster m : monsters) {
           moveOrder.addObservers(m);
       }
-      numOfEnemies =b.getNumOfEnemies();
-      PlayerMovement pm =new PlayerMovement(p);
-      String move ="";
-      while(numOfEnemies>0 & b.isAlive()){
-          System.out.println(p.description());
-          System.out.println(b.toString());
-          Scanner in = new Scanner(System.in);
-          try{
-              move = in.nextLine();
-              Visited v;
-              switch (move){
-                  case "w":
-                       v =b.getTile(p.getX(),p.getY()-1);
-                      if(!b.getTile(p.getX(),p.getY()-1).description().equals("")){
-                          System.out.println(p.getName()+" engaged in combat with "+b.getTile(p.getX(),p.getY()-1).getName()+".");
-                          System.out.println(p.description());
-                          System.out.println(b.getTile(p.getX(),p.getY()-1).description());
-                      }
-                      move =moveOrder.move(pm,v,b.getBoard());
-                      break;
-                  case "s":
-                       v =b.getTile(p.getX(),p.getY()+1);
-                       if(!b.getTile(p.getX(),p.getY()+1).description().equals("")){
-                           System.out.println(p.getName()+" engaged in combat with "+b.getTile(p.getX(),p.getY()+1).getName()+".");
-                           System.out.println(p.description());
-                           System.out.println(b.getTile(p.getX(),p.getY()+1).description());
-                       }
-                       move = moveOrder.move(pm,v,b.getBoard());
-                       break;
-                  case "a":
-                      v =b.getTile(p.getX()-1,p.getY());
-                      if(!b.getTile(p.getX()-1,p.getY()).description().equals("")){
-                          System.out.println(p.getName()+" engaged in combat with "+b.getTile(p.getX()-1,p.getY()).getName()+".");
-                          System.out.println(p.description());
-                          System.out.println(b.getTile(p.getX()-1,p.getY()).description());
-                      }
-                      move = moveOrder.move(pm,v,b.getBoard());
-                      break;
-                  case "d":
-                      v =b.getTile(p.getX()+1,p.getY());
-                      if(!b.getTile(p.getX()+1,p.getY()).description().equals("")){
-                          System.out.println(p.getName()+" engaged in combat with "+b.getTile(p.getX()+1,p.getY()).getName()+".");
-                          System.out.println(p.description());
-                          System.out.println(b.getTile(p.getX(),p.getY()+1).description());
-                      }
-                      move = moveOrder.move(pm,v,b.getBoard());
-                      break;
-                  case "e":
-                      move=moveOrder.cast(pm,totalEnemies, b.getBoard());
-                      break;
-                  case "q":
-                      //do nothing
-                      break;
-                  default:
-                      System.out.println("u must peek one character :");
-                      System.out.println("w - Move up \n ");
-                      System.out.println("s - Move down \n");
-                      System.out.println("a - Move left \n");
-                      System.out.println("d - Move right \n");
-                      System.out.println("e - Cast special ability \n");
-                      System.out.println("q - Do nothing \n");
-                      break;
+      numOfEnemies = b.getNumOfEnemies();
+      PlayerMovement pm = new PlayerMovement(p);
+      String move = "";
+          while (numOfEnemies > 0 & b.isAlive()) {
+              try {
+              System.out.println(b.toString());
+              System.out.println(p.description());
+              Scanner in = new Scanner(System.in);
+              try {
+                  move = in.nextLine();
+                  Visited v;
+                  switch (move) {
+                      case "w":
+                          v = b.getTile(p.getX(), p.getY() - 1);
+                          if (!b.getTile(p.getX(), p.getY() - 1).description().equals("")) {
+                              System.out.println(p.getName() + " engaged in combat with " + b.getTile(p.getX(), p.getY() - 1).getName() + ".");
+                              System.out.println(p.description());
+                              System.out.println(b.getTile(p.getX(), p.getY() - 1).description());
+                          }
+                          move = moveOrder.move(pm, v, b.getBoard());
+                          break;
+                      case "s":
+                          v = b.getTile(p.getX(), p.getY() + 1);
+                          if (!b.getTile(p.getX(), p.getY() + 1).description().equals("")) {
+                              System.out.println(p.getName() + " engaged in combat with " + b.getTile(p.getX(), p.getY() + 1).getName() + ".");
+                              System.out.println(p.description());
+                              System.out.println(b.getTile(p.getX(), p.getY() + 1).description());
+                          }
+                          move = moveOrder.move(pm, v, b.getBoard());
+                          break;
+                      case "a":
+                          v = b.getTile(p.getX() - 1, p.getY());
+                          if (!b.getTile(p.getX() - 1, p.getY()).description().equals("")) {
+                              System.out.println(p.getName() + " engaged in combat with " + b.getTile(p.getX() - 1, p.getY()).getName() + ".");
+                              System.out.println(p.description());
+                              System.out.println(b.getTile(p.getX() - 1, p.getY()).description());
+                          }
+                          move = moveOrder.move(pm, v, b.getBoard());
+                          break;
+                      case "d":
+                          v = b.getTile(p.getX() + 1, p.getY());
+                          if (!b.getTile(p.getX() + 1, p.getY()).description().equals("")) {
+                              System.out.println(p.getName() + " engaged in combat with " + b.getTile(p.getX() + 1, p.getY()).getName() + ".");
+                              System.out.println(p.description());
+                              System.out.println(b.getTile(p.getX() + 1, p.getY()).description());
+                          }
+                          move = moveOrder.move(pm, v, b.getBoard());
+                          break;
+                      case "e":
+                          move = moveOrder.cast(pm, totalEnemies, b.getBoard());
+                          break;
+                      case "q":
+                          //do nothing
+                          break;
+                      default:
+                          System.out.println("u must peek one character :");
+                          System.out.println("w - Move up \n ");
+                          System.out.println("s - Move down \n");
+                          System.out.println("a - Move left \n");
+                          System.out.println("d - Move right \n");
+                          System.out.println("e - Cast special ability \n");
+                          System.out.println("q - Do nothing \n");
+                          break;
+                  }
+              } catch (Exception e) {
+                  System.out.println("something went wrong");
+                  // go back
               }
-          }catch (Exception e){
-              System.out.println("something went wrong");
-              // go back
+              if (!move.equals("")) {//prints the scenerio that happened
+                  int count = 0;
+                  for (int i = 0; i < move.length(); i++)
+                      if (move.charAt(i) == ',') {
+                          if (!move.substring(count, i).equals(""))
+                              System.out.println(move.substring(count, i));
+                          count = i + 1;
+                      }
+
+              }
+              // now we check if enemy has died
+              monsters.forEach((e) -> {
+                  if (!e.isAlive()) {
+                      b.removeEnemy(e);
+                      monsters.remove(e);
+                      numOfEnemies--;
+                  }
+              });
+              traps.forEach((e) -> {
+                  if (!e.isAlive()) {
+                      b.removeEnemy(e);
+                      traps.remove(e);
+                      numOfEnemies--;
+                  }
+              });
+
+
+
+              // now we preform an monster movement
+              // monster can attack only player
+              for (Monster e : monsters) {
+                  EnemyMovement em = new EnemyMovement(e);
+                  Visited v;
+                  Position pos = e.preformMovement(p, b.getBoard(), b); // using dijkstra
+                  v = b.getTile(pos.getX(), pos.getY());
+                  if (b.getTile(pos.getX(), pos.getY()).getSign() == '@') {
+                      System.out.println(e.getName() + " engaged in combat with " + p.getName() + ".");
+                      System.out.println(e.description());
+                      System.out.println(p.description());
+                  }
+                  move = moveOrder.move(em, v, b.getBoard());
+                  //prints the scenerio that happened
+                  if (!move.equals("")) {
+                      int count = 0;
+                      for (int i = 0; i < move.length(); i++)
+                          if (move.charAt(i) == ',') {
+                              if (!move.substring(count, i).equals(""))
+                                  System.out.println(move.substring(count, i));
+                              count = i + 1;
+                          }
+                  } else {
+
+                  }
+              }
+                  for (Trap e : traps) {
+                      EnemyMovement em = new EnemyMovement(e);
+                      Visited v;
+                      v = b.getTile(p.getX(), p.getY());
+                      if (e.range(p)<2) {
+                          System.out.println(e.getName() + " engaged in combat with " + p.getName()+ ".");
+                          System.out.println(e.description());
+                          System.out.println(p.description());
+                      }
+                      move = moveOrder.move(em, v, b.getBoard());
+                      //prints the scenerio that happened
+                      if (!move.equals("")) {
+                          int count = 0;
+                          for (int i = 0; i < move.length(); i++)
+                              if (move.charAt(i) == ',') {
+                                  if (!move.substring(count, i).equals(""))
+                                      System.out.println(move.substring(count, i));
+                                  count = i + 1;
+                              }
+                      } else {
+
+                      }
+                  }//move = moveOrder.move(em,)
+          } catch (Exception e){
+                  // i dont know why
+
+              }
+      }
+      System.out.println(b.toString());
+          if(!p.isAlive())
+          {
+              System.out.println("Player is Dead End Game");
+              System.out.println(
+                      " __     __           _                    _ \n" +
+                              " \\ \\   / /          | |                  | |\n" +
+                              "  \\ \\_/ /__  _   _  | |     ___  ___  ___| |\n" +
+                              "   \\   / _ \\| | | | | |    / _ \\/ __|/ _ \\ |\n" +
+                              "    | | (_) | |_| | | |___| (_) \\__ \\  __/_|\n" +
+                              "    |_|\\___/ \\__,_| |______\\___/|___/\\___(_)");
           }
 
-      }
-
+          }
 //      public void printErrorMainArg()
 //      {
 //          System.out.println("Please run the code as follows:");
@@ -228,7 +323,7 @@ public class RunGame {
 //                    if(b.hasNoEnemiesLeft())
 //                    {
 //                        levelIdx++;
-//                        //board = new Board(levels[levelIdx],board.getPlayer());
+//                        //board = new GAME.Board(levels[levelIdx],board.getPlayer());
 //                    }
 //                }
 //
@@ -245,7 +340,7 @@ public class RunGame {
 //              board.add(new Tile('.', i, j,""));
 //          }
 //      }
-//      Monster m=new Monster(2,1,10,10,10,10,3,3);
+//      EnemyTypes.Monster m=new EnemyTypes.Monster(2,1,10,10,10,10,3,3);
 //      Player p = new Player(2,3,"ziv",10,10,1,1,"");
 //      Wall w2 =new Wall(2,2);
 //      Wall w1 =new Wall(2,1);
@@ -274,4 +369,4 @@ public class RunGame {
 //      m.setShortPaths(m,board);
 //      System.out.println(p.getPosition().getShortestPath());
   }
-}
+

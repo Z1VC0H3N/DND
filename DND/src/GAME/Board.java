@@ -2,7 +2,6 @@ package GAME;
 
 import EnemyTypes.Monster;
 import EnemyTypes.Trap;
-import Interactions.Visited;
 import TILE.*;
 import UNIT.*;
 import Warriors.*;
@@ -11,12 +10,10 @@ import Hunters.*;
 import Rogues.*;
 import MonsterTypes.*;
 import TrapsTypes.*;
-import jdk.jshell.SourceCodeAnalysis;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.concurrent.TransferQueue;
 
 public class Board {
     private LinkedList<Tile> units;
@@ -29,7 +26,7 @@ public class Board {
     private ArrayList<Character> tile;// dont know why
     private int numOfHero;
 
-//    public Board(File f, int numOfPlayer) throws IOException {
+//    public GAME.Board(File f, int numOfPlayer) throws IOException {
 //        this.level = f;
 //        parseFile(level);
 //        this.numOfHero = numOfPlayer;
@@ -190,7 +187,7 @@ public class Board {
         return traps.size();
     }
     public String getStringOfTile(int x,int y){
-        return units.get(length*x+y).toString();
+        return units.get(length*y+x).toString();
     }
 
     public String toString(){
@@ -214,6 +211,17 @@ public class Board {
     }
 
     public Tile getTile(int x, int y) {
-        return units.get(length*x+y);
+        return units.get(length*y+x);
     }
+
+
+    public void removeEnemy(Monster e) {
+        enemies.remove(e);
+        units.remove(e);
+    }
+    public void removeEnemy(Trap e) {
+        traps.remove(e);
+        units.remove(e);
+    }
+
 }

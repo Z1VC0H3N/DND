@@ -1,4 +1,4 @@
-package GAME;
+package Interactions;
 
 import UNIT.Enemy;
 import Interactions.Movement;

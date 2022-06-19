@@ -1,4 +1,4 @@
-package GAME;
+package Interactions;
 
 import UNIT.Enemy;
 import Interactions.Movement;
@@ -7,7 +7,7 @@ import TILE.Tile;
 
 import java.util.LinkedList;
 
-public class MoveOrder implements Observable{
+public class MoveOrder implements Observable {
     LinkedList<Visited> observers;
 
     public MoveOrder(){
@@ -17,6 +17,7 @@ public class MoveOrder implements Observable{
     @Override
     public String move(Movement m, Visited v, LinkedList<Tile> board) {
         return m.move(v,board);
+
     }
 
     @Override

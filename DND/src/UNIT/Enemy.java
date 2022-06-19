@@ -1,5 +1,9 @@
 package UNIT;
 
+import TILE.Tile;
+
+import java.util.LinkedList;
+
 public class Enemy extends Unit  {
     protected int experience;
 
@@ -12,12 +16,34 @@ public class Enemy extends Unit  {
     public String description() {
         return this.name+" HealthAmount:"+ this.health.getHealthAmount()+"/"+ this.health.getHealthPool()+" AttackPower:"+ this.attack+" DefencePower:"+ this.defense+"     ExperienceValue:"+ this.experience;
     }
-    public String attack(Player p){
-        //todo;
-        return "";
+    public String attack(Player e) {
+        String[]ans=new String[4];
+        for(int i=0;i<ans.length;i++)
+            ans[i]="";
+        int attPoints=(int)(Math.random()*this.attack+1)-1;
+        int defPoints=(int)(Math.random()*e.getDefense()+1)-1;
+        ans[0]=this.name+" rolled "+attPoints+" attack points";
+        ans[1]=e.getName()+" rolled "+defPoints+" defence points";
+        int damage=attPoints-defPoints;
+        if(damage<0)
+            damage=0;
+        ans[2]=this.name+" did "+damage+" damage to "+e.getName();
+        e.decreaseHealth(damage);
+        if(!e.isAlive()) {
+            ans[3]="Game Over!";
+            e.setSign('X');
+        }
+        return ans[0]+","+ans[1]+","+ans[2]+","+ans[3];
+    }
+    public boolean isAlive(){
+        return getHealthAmount()>0;
     }
 
     public int[] death() {
         return new int[]{experience,getX(),getY()};
     }
+    public String makeMove(LinkedList<Tile> board){
+        return "";
+    }
+
 }

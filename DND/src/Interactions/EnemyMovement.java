@@ -13,6 +13,9 @@ import java.util.LinkedList;
 
 public class EnemyMovement extends Movement {
     private Enemy e;
+    public EnemyMovement(Enemy enemy){
+        this.e=enemy;
+    }
     public String visit(Player player, LinkedList<Tile> board) {
         return e.attack(player);
     }

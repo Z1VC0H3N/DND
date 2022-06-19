@@ -43,6 +43,9 @@ public class Position {
     public LinkedList<Position> getShortestPath(){
         return shortestPath;
     }
+    public void clearPath(){
+        this.shortestPath =new LinkedList<>();
+    }
     public void setDistance(int distance){
         this.distance=distance;
     }
@@ -61,5 +64,12 @@ public class Position {
     }
     public String toString(){
         return "X value: "+x + " Y value:"+y;
+    }
+    public boolean equals(Position other){
+        return x == other.x &y == other.y;
+    }
+
+    public void addDistance(Position position) {
+        this.shortestPath.addLast(position);
     }
 }

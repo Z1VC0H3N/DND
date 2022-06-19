@@ -1,7 +1,6 @@
 package MonsterTypes;
 
 import EnemyTypes.Monster;
-import UTILITY.QueueAsLinkedList;
 
 public class QueenCersei extends Monster {
     public QueenCersei(int x,int y){

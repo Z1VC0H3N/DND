@@ -33,13 +33,12 @@ public class RunGame {
   private LinkedList<Trap> traps;
   private LinkedList<Enemy> totalEnemies;
   private int numOfEnemies;
-  private boolean endGame =false;
+  private PlayerMovement pm;
 
-  public void startGame(String[] args) throws IOException {
+    public void startGame(String[] args) throws IOException {
       levelsPath = new File(args[0]);
       myLevel = new File(String.valueOf(levelsPath.getCanonicalFile()));
       levels = myLevel.listFiles(); // gets all levels from folder levels
-      boolean makeMistake = false;
       Player[] playerSet = {new JonSnow(0, 0), new TheHound(0, 0), new Melisandre(0, 0), new ThorosOfMyr(0, 0), new AryaStark(0, 0), new Bronn(0, 0), new Ygritte(0, 0)};
       int levelIdx = 0;
       int x = 1;
@@ -65,31 +64,12 @@ public class RunGame {
       }
       System.out.println("You have selected:");
       System.out.println(playerSet[choice - 1].getName());
-      b = new Board(levels[0], choice);
-      System.out.println(b.toString());
+      b = new Board(levels[levelIdx], choice);
       p = b.getPlayer();
-      endGame = b.isAlive();// need to be changed
-      monsters = b.getMonsters();
-      traps = b.getTraps();
-      totalEnemies = new LinkedList<>();
-      for (Monster m : monsters) {
-          totalEnemies.addLast(m);
-      }
-      for (Trap t : traps) {
-          totalEnemies.addLast(t);
-      }
-      moveOrder.addObservers(p);
-      for (Trap t : traps) {
-          moveOrder.addObservers(t);
-      }
-      for (Monster m : monsters) {
-          moveOrder.addObservers(m);
-      }
-      numOfEnemies = b.getNumOfEnemies();
-      PlayerMovement pm = new PlayerMovement(p);
+      System.out.println(b.toString());
+      initialData(b);
       String move = "";
           while (numOfEnemies > 0 & b.isAlive()) {
-              try {
               System.out.println(b.toString());
               System.out.println(p.description());
               Scanner in = new Scanner(System.in);
@@ -139,6 +119,16 @@ public class RunGame {
                       case "q":
                           //do nothing
                           break;
+
+                          // lets add some chits
+
+                      case "killAll!":
+                          for (Enemy e:totalEnemies){
+                              e.onDeath();
+                              p.setExp(p.getExp()+e.getExperience());
+                              p.levelUp();
+                          }
+                          break;
                       default:
                           System.out.println("u must peek one character :");
                           System.out.println("w - Move up \n ");
@@ -163,24 +153,6 @@ public class RunGame {
                       }
 
               }
-//              // now we check if enemy has died
-//              monsters.forEach((e) -> {
-//                  if (!e.isAlive()) {
-//                      b.removeEnemy(e);
-//                      monsters.remove(e);
-//                      numOfEnemies--;
-//                  }
-//              });
-//              traps.forEach((e) -> {
-//                  if (!e.isAlive()) {
-//                      b.removeEnemy(e);
-//                      traps.remove(e);
-//                      numOfEnemies--;
-//                  }
-//              });
-
-
-
               // now we preform an monster movement
               // monster can attack only player
               for (Monster e : monsters) {
@@ -229,11 +201,13 @@ public class RunGame {
                       } else {
 
                       }
-                  }//move = moveOrder.move(em,)
-          } catch (Exception e){
-                  // i dont know why
-
-              }
+                  }
+                  numOfEnemies =b.getNumOfEnemies();
+                  if(numOfEnemies==0& p.isAlive()){// change the board
+                      levelIdx++;
+                     b =new Board(levels[levelIdx],p);
+                     initialData(b);
+                  }
       }
       System.out.println(b.toString());
           if(!p.isAlive())
@@ -249,6 +223,28 @@ public class RunGame {
           }
 
           }
+
+    private void initialData(Board b) {
+        //p = b.getPlayer();
+        monsters = b.getMonsters();
+        traps = b.getTraps();
+        totalEnemies = new LinkedList<>();
+        for (Monster m : monsters) {
+            totalEnemies.addLast(m);
+        }
+        for (Trap t : traps) {
+            totalEnemies.addLast(t);
+        }
+        moveOrder.addObservers(p);
+        for (Trap t : traps) {
+            moveOrder.addObservers(t);
+        }
+        for (Monster m : monsters) {
+            moveOrder.addObservers(m);
+        }
+        numOfEnemies = b.getNumOfEnemies();
+        pm = new PlayerMovement(p);
+    }
 //      public void printErrorMainArg()
 //      {
 //          System.out.println("Please run the code as follows:");

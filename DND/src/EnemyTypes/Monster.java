@@ -106,5 +106,8 @@ public class Monster extends Enemy implements Visited {
         }
         Graph g = new Graph(set);
         g.calculateShortestPathFromSource(g,monster.position);
+        for(Tile t:inRange){
+            t.getPosition().clearDestinations();
+        }
     }
 }

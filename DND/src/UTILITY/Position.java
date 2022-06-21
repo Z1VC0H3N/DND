@@ -37,6 +37,9 @@ public class Position {
     public void addDestination(Position destination,int distance){
         adjacentNodes.put(destination,distance);
     }
+    public void clearDestinations(){
+        this.adjacentNodes=new HashMap<>();
+    }
     public int getDistance(){
         return distance;
     }

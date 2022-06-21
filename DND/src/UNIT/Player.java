@@ -134,5 +134,11 @@ public class Player extends Unit implements Visited {
     public boolean isAlive(){
         return this.getHealthAmount()>0;
     }
+    public void setExp(int exp){
+        this.exp=exp;
+    }
+    public int getExp(){
+        return exp;
+    }
 
 }

@@ -4,6 +4,7 @@ import EnemyTypes.Monster;
 import EnemyTypes.Trap;
 import TILE.*;
 import UNIT.*;
+import UTILITY.Position;
 import Warriors.*;
 import Mages.*;
 import Hunters.*;
@@ -13,15 +14,18 @@ import TrapsTypes.*;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
 
 public class Board {
     private LinkedList<Tile> units;
+    private Map<Position,Tile> positionTileMap;
     private int length;
     private int height;
     private LinkedList<Monster> enemies;
     private LinkedList<Trap> traps;
-    private Player hero ;
+    private Player hero =null ;
     private File level;
     private int numOfHero;
 
@@ -32,9 +36,19 @@ public class Board {
 //    }
     public Board(File f,int numOfPlayer){
         this.level=f;
+        this.numOfHero=numOfPlayer;
         //this.hero=p;
         try {
-            parseFile(f,numOfPlayer);
+            parseFile(f);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public Board(File f,Player p){
+        this.level=f;
+        this.hero = p;
+        try {
+            parseFile(f);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -61,7 +75,7 @@ public class Board {
         return null;
     }
 
-    public void parseFile(File f,int numOfHero) throws IOException {
+    public void parseFile(File f) throws IOException {
         if (f.isFile()) {//other condition like name ends in html
             BufferedReader first = new BufferedReader(new FileReader(f));
             String str;
@@ -76,6 +90,7 @@ public class Board {
             units = new LinkedList<>();
             enemies = new LinkedList<>();
             traps =new LinkedList<>();
+            positionTileMap=new HashMap<>();
             BufferedReader sec = new BufferedReader(new FileReader(f));
             str = "";
             int idy = 0;
@@ -83,9 +98,16 @@ public class Board {
                 for (int i = 0; i < str.length(); i++) {
                     // i is the x parameter and idy is the y parameter in Position
                     if(str.charAt(i)=='@'){
-                        hero = chooseHero(numOfHero,i,idy);
+                        if(hero==null) {
+                            hero = chooseHero(numOfHero, i, idy);
+                        }
+                        else {
+                            hero.setPosition(new Position(i,idy));
+                        }
                     }
-                    units.addLast(getTile(str.charAt(i), i, idy));
+                    Tile t =getTile(str.charAt(i), i, idy);
+                    units.addLast(t);
+                    positionTileMap.put(new Position(i,idy),t);
                 }
                 idy++;
             }
@@ -209,11 +231,14 @@ public class Board {
     }
 
     private void removeFromUnits(Enemy e) {
-        for(Tile t :units){
-            if(t.getPosition().equals(e.getPosition())){
-                t = new EmptyTile(t.getX(),t.getY());
-            }
-        }
+//        for(Tile t :units){
+//            if(t.getPosition().equals(e.getPosition())){
+//                t = new EmptyTile(t.getX(),t.getY());
+//            }
+//        }
+       // units.get(i*length+j).toString();
+        units.set(e.getY()*length+e.getX(), new EmptyTile(e.getX(),e.getY()));
+        positionTileMap.put(e.getPosition(), new EmptyTile(e.getX(),e.getY()));
     }
 
     public LinkedList<Tile> getBoard(){
@@ -271,15 +296,4 @@ public class Board {
     public Tile getTile(int x, int y) {
         return units.get(length*y+x);
     }
-
-
-//    public void removeEnemy(Monster e) {
-//        enemies.remove(e);
-//        units.remove(e);
-//    }
-//    public void removeEnemy(Trap e) {
-//        traps.remove(e);
-//        units.remove(e);
-//    }
-
 }

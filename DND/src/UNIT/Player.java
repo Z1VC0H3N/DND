@@ -36,7 +36,7 @@ public class Player extends Unit implements Visited {
         return this.name+"  "+"Health:"+this.health.getHealthAmount()+"/"+ getHealthPool()+" Attack : "+this.attack+" Defence : "+this.defense+ " Level : "+this.playerLevel+" Experience : "+this.exp +"/50";
     }
     public String attack(Enemy e, LinkedList<Tile> board){
-        //todo;
+        //todo; transfer from [] to list
         String[]ans=new String[5];
         for(int i=0;i<ans.length;i++){
             ans[i] ="";
@@ -54,6 +54,7 @@ public class Player extends Unit implements Visited {
               swap(this,e,board);
               info = e.death();
               ans[2] = e.getName() + " died " + this.name + " gained " + info[0] + " experience points";
+              e.onDeath();
           }
           else{
               ans[2] ="";

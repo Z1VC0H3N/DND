@@ -19,7 +19,6 @@ import Warriors.TheHound;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ConcurrentModificationException;
 import java.util.LinkedList;
 import java.util.Scanner;
 
@@ -164,21 +163,21 @@ public class RunGame {
                       }
 
               }
-              // now we check if enemy has died
-              monsters.forEach((e) -> {
-                  if (!e.isAlive()) {
-                      b.removeEnemy(e);
-                      monsters.remove(e);
-                      numOfEnemies--;
-                  }
-              });
-              traps.forEach((e) -> {
-                  if (!e.isAlive()) {
-                      b.removeEnemy(e);
-                      traps.remove(e);
-                      numOfEnemies--;
-                  }
-              });
+//              // now we check if enemy has died
+//              monsters.forEach((e) -> {
+//                  if (!e.isAlive()) {
+//                      b.removeEnemy(e);
+//                      monsters.remove(e);
+//                      numOfEnemies--;
+//                  }
+//              });
+//              traps.forEach((e) -> {
+//                  if (!e.isAlive()) {
+//                      b.removeEnemy(e);
+//                      traps.remove(e);
+//                      numOfEnemies--;
+//                  }
+//              });
 
 
 

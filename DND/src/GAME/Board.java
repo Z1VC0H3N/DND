@@ -23,7 +23,6 @@ public class Board {
     private LinkedList<Trap> traps;
     private Player hero ;
     private File level;
-    private ArrayList<Character> tile;// dont know why
     private int numOfHero;
 
 //    public GAME.Board(File f, int numOfPlayer) throws IOException {
@@ -100,65 +99,124 @@ public class Board {
             case ('#'):
                 return new Wall(x, y);
             case ('@'):
-                //return chooseHero(numOfHero, x, y);
                 return hero;
             case ('s'):
                 LannisterSolider l =new LannisterSolider(x,y);
+                l.setDeathCallBack(()->{
+                    enemies.remove(l);
+                    removeFromUnits(l);
+                });
                 enemies.add(l);// dont know why maybe we will know
                 return l;
             case ('k'):
                 LannisterKnight k =new LannisterKnight(x,y);
+                k.setDeathCallBack(()->{
+                    enemies.remove(k);
+                    removeFromUnits(k);
+                });
                 enemies.add(k);
                 return k;
             case ('q'):
                 QueensGuard qg =new QueensGuard(x,y);
+                qg.setDeathCallBack(()->{
+                    enemies.remove(qg);
+                    removeFromUnits(qg);
+                });
                 enemies.add(qg);
                 return qg;
             case ('z'):
                 Wright z =new Wright(x,y);
+                z.setDeathCallBack(()->{
+                    enemies.remove(z);
+                    removeFromUnits(z);
+                });
                 enemies.add(z);
                 return z;
             case ('b'):
                 BearWright b =new BearWright(x,y);
+                b.setDeathCallBack(()->{
+                    enemies.remove(b);
+                    removeFromUnits(b);
+                });
                 enemies.add(b);
                 return b;
             case ('g'):
                 GiantWright g =new GiantWright(x,y);
+                g.setDeathCallBack(()->{
+                    enemies.remove(g);
+                    removeFromUnits(g);
+                });
                 enemies.add(g);
                 return g;
             case ('w'):
                 WhiteWalker w = new WhiteWalker(x,y);
+                w.setDeathCallBack(()->{
+                    enemies.remove(w);
+                    removeFromUnits(w);
+                });
                 enemies.add(w);
                 return w;
             case ('M'):
                 TheMountain m = new TheMountain(x,y);
+                m.setDeathCallBack(()->{
+                    enemies.remove(m);
+                    removeFromUnits(m);
+                });
                 enemies.add(m);
                 return m;
             case ('C'):
                 QueenCersei c =new QueenCersei(x,y);
+                c.setDeathCallBack(()->{
+                    enemies.remove(c);
+                    removeFromUnits(c);
+                });
                 enemies.add(c);
                 return c;
             case ('K'):
                 NightsKing K =new NightsKing(x,y);
+                K.setDeathCallBack(()->{
+                    enemies.remove(K);
+                    removeFromUnits(K);
+                });
                 enemies.add(K);
                 return K;
             case ('B'):
                 BonusTrap B =new BonusTrap(x,y);
+                B.setDeathCallBack(()->{
+                    traps.remove(B);
+                    removeFromUnits(B);
+                });
                 traps.add(B);
                 return B;
             case ('Q'):
                 QueensTrap q =new QueensTrap(x,y);
+                q.setDeathCallBack(()->{
+                    traps.remove(q);
+                    removeFromUnits(q);
+                });
                 traps.add(q);
                 return q;
             case ('D'):
                 DeathTrap d =new DeathTrap(x,y);
+                d.setDeathCallBack(()->{
+                    traps.remove(d);
+                    removeFromUnits(d);
+                });
                 traps.add(d);
                 return d;
         }
         return null;
     }
 
-	public LinkedList<Tile> getBoard(){
+    private void removeFromUnits(Enemy e) {
+        for(Tile t :units){
+            if(t.getPosition().equals(e.getPosition())){
+                t = new EmptyTile(t.getX(),t.getY());
+            }
+        }
+    }
+
+    public LinkedList<Tile> getBoard(){
 		return units;
 	}
 
@@ -215,13 +273,13 @@ public class Board {
     }
 
 
-    public void removeEnemy(Monster e) {
-        enemies.remove(e);
-        units.remove(e);
-    }
-    public void removeEnemy(Trap e) {
-        traps.remove(e);
-        units.remove(e);
-    }
+//    public void removeEnemy(Monster e) {
+//        enemies.remove(e);
+//        units.remove(e);
+//    }
+//    public void removeEnemy(Trap e) {
+//        traps.remove(e);
+//        units.remove(e);
+//    }
 
 }

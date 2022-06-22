@@ -124,121 +124,71 @@ public class Board {
                 return hero;
             case ('s'):
                 LannisterSolider l =new LannisterSolider(x,y);
-                l.setDeathCallBack(()->{
-                    enemies.remove(l);
-                    removeFromUnits(l);
-                });
+                l.setDeathCallBack(()->enemies.remove(l));
                 enemies.add(l);// dont know why maybe we will know
                 return l;
             case ('k'):
                 LannisterKnight k =new LannisterKnight(x,y);
-                k.setDeathCallBack(()->{
-                    enemies.remove(k);
-                    removeFromUnits(k);
-                });
+                k.setDeathCallBack(()->enemies.remove(k));
                 enemies.add(k);
                 return k;
             case ('q'):
                 QueensGuard qg =new QueensGuard(x,y);
-                qg.setDeathCallBack(()->{
-                    enemies.remove(qg);
-                    removeFromUnits(qg);
-                });
+                qg.setDeathCallBack(()->enemies.remove(qg));
                 enemies.add(qg);
                 return qg;
             case ('z'):
                 Wright z =new Wright(x,y);
-                z.setDeathCallBack(()->{
-                    enemies.remove(z);
-                    removeFromUnits(z);
-                });
+                z.setDeathCallBack(()->enemies.remove(z));
                 enemies.add(z);
                 return z;
             case ('b'):
                 BearWright b =new BearWright(x,y);
-                b.setDeathCallBack(()->{
-                    enemies.remove(b);
-                    removeFromUnits(b);
-                });
+                b.setDeathCallBack(()->enemies.remove(b));
                 enemies.add(b);
                 return b;
             case ('g'):
                 GiantWright g =new GiantWright(x,y);
-                g.setDeathCallBack(()->{
-                    enemies.remove(g);
-                    removeFromUnits(g);
-                });
+                g.setDeathCallBack(()->enemies.remove(g));
                 enemies.add(g);
                 return g;
             case ('w'):
                 WhiteWalker w = new WhiteWalker(x,y);
-                w.setDeathCallBack(()->{
-                    enemies.remove(w);
-                    removeFromUnits(w);
-                });
+                w.setDeathCallBack(()->enemies.remove(w));
                 enemies.add(w);
                 return w;
             case ('M'):
                 TheMountain m = new TheMountain(x,y);
-                m.setDeathCallBack(()->{
-                    enemies.remove(m);
-                    removeFromUnits(m);
-                });
+                m.setDeathCallBack(()->enemies.remove(m));
                 enemies.add(m);
                 return m;
             case ('C'):
                 QueenCersei c =new QueenCersei(x,y);
-                c.setDeathCallBack(()->{
-                    enemies.remove(c);
-                    removeFromUnits(c);
-                });
+                c.setDeathCallBack(()->enemies.remove(c));
                 enemies.add(c);
                 return c;
             case ('K'):
                 NightsKing K =new NightsKing(x,y);
-                K.setDeathCallBack(()->{
-                    enemies.remove(K);
-                    removeFromUnits(K);
-                });
+                K.setDeathCallBack(()->enemies.remove(K));
                 enemies.add(K);
                 return K;
             case ('B'):
                 BonusTrap B =new BonusTrap(x,y);
-                B.setDeathCallBack(()->{
-                    traps.remove(B);
-                    removeFromUnits(B);
-                });
+                B.setDeathCallBack(()->traps.remove(B));
                 traps.add(B);
                 return B;
             case ('Q'):
                 QueensTrap q =new QueensTrap(x,y);
-                q.setDeathCallBack(()->{
-                    traps.remove(q);
-                    removeFromUnits(q);
-                });
+                q.setDeathCallBack(()->traps.remove(q));
                 traps.add(q);
                 return q;
             case ('D'):
                 DeathTrap d =new DeathTrap(x,y);
-                d.setDeathCallBack(()->{
-                    traps.remove(d);
-                    removeFromUnits(d);
-                });
+                d.setDeathCallBack(()-> traps.remove(d));
                 traps.add(d);
                 return d;
         }
         return null;
-    }
-
-    private void removeFromUnits(Enemy e) {
-//        for(Tile t :units){
-//            if(t.getPosition().equals(e.getPosition())){
-//                t = new EmptyTile(t.getX(),t.getY());
-//            }
-//        }
-       // units.get(i*length+j).toString();
-        units.set(e.getY()*length+e.getX(), new EmptyTile(e.getX(),e.getY()));
-        positionTileMap.put(e.getPosition(), new EmptyTile(e.getX(),e.getY()));
     }
 
     public LinkedList<Tile> getBoard(){

@@ -1,8 +1,15 @@
 package PlayerTypes;
 
+import EnemyTypes.Monster;
+import EnemyTypes.Trap;
+import Interactions.PlayerMovement;
+import TILE.EmptyTile;
 import TILE.Tile;
 import UNIT.Enemy;
 import UNIT.Player;
+
+import java.util.LinkedList;
+import java.util.Random;
 
 /**
  * Special ability: Avenger’s Shield, randomly hits one enemy withing range < 3 for an amount
@@ -20,16 +27,71 @@ public class Warrior extends Player {
         this.abilityCooldown=abilityCooldown;
         remainingCooldown=0;
     }
-    public String onAbilityCastAttempt(Enemy[] enemies , Tile[][] board) {
-            //todo;
-            return "";
+    public String onAbilityCastAttempt(LinkedList<Enemy> enemies,LinkedList<Tile> board) {
+        String ans="";
+        boolean found=false;
+        if(remainingCooldown>0)
+            ans=this.name+" tried to use "+this.specialAbility+" but there is a cooldown: "+remainingCooldown+"/"+abilityCooldown+",";
+        else {
+            this.setHealthAmount((this.getHealthAmount()+10*this.defense));
+            if(this.getHealthAmount()>=this.getHealthPool())
+                this.setHealthAmount(this.getHealthPool());
+            ans=this.name+" casted special abillity healing for "+10*this.defense+",";
+            for(int i=0;i<enemies.size()&!found;i++) {
+                if (this.range(enemies.get(i)) < 3) {
+                    found = true;
+                    ans = ans + this.cast(enemies.get(i), board) + ",";
+                }
+            }
+
+
+            remainingCooldown=abilityCooldown;
+
+        }
+        return ans;
+
     }
-    public String cast(Enemy e , Tile[][] board) {
-        remainingCooldown=abilityCooldown;
-        health.setHealthAmount(Math.min(health.getHealthAmount()+10*defense,health.getHealthPool()));
-        //todo;
-        // need to add randomly hits point and the ability of the player
-        return "";
+
+    @Override
+    public String cast(LinkedList<Enemy> enemies, LinkedList<Tile> board) {
+        return onAbilityCastAttempt(enemies,board);
+    }
+
+    public String cast(Enemy e, LinkedList<Tile> board) {
+        int attPoints=(int)(this.getHealthPool()/10);
+        int defPoints=(int)(Math.random()*e.getDefense()+1)-1;
+        String[]ans=new String[5];
+        for(int i=0;i<ans.length;i++)
+            ans[i]="";
+        ans[0]=this.name+ " used "+this.specialAbility;
+        ans[1]=e.getName()+" rolled "+defPoints+" defence points";
+        int[] information=new int[3];
+        int damage = attPoints - defPoints;
+        if(damage>0){
+            e.decreaseHealth(damage);
+            if(!e.isAlive()) {
+                exp += e.getExperience();
+                swap(this,e,board);
+                information = e.death();
+                ans[2] = e.getName() + " died " + this.name + " gained " + information[0] + " experience points";
+                e.onDeath();
+            }
+            else{
+                ans[2] ="";
+            }
+        }
+        else {
+            damage = 0;
+        }
+        ans[3]=this.name+" did "+damage+" damage to "+e.getName();
+        while(this.exp>=50*this.playerLevel) {
+            ans[4] = ans[4] + this.levelUp() +",";
+        }
+        String out ="";
+        for(int x =0;x<5;x++){
+            out=out+ans[x]+",";
+        }
+        return out.substring(0, out.length()-1);
     }
 
     @Override

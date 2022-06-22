@@ -10,6 +10,7 @@ import UNIT.Player;
 import UTILITY.Position;
 
 import java.util.LinkedList;
+import java.util.Random;
 
 public class PlayerMovement extends Movement{
     protected Player player;
@@ -38,7 +39,8 @@ public class PlayerMovement extends Movement{
 
     @Override
     public String visit(LinkedList<Enemy> enemies, LinkedList<Tile> board) {
-        return null;
+        String s=player.cast(enemies, board);
+        return s;
     }
 
     @Override

@@ -17,6 +17,8 @@ import UTILITY.Position;
 import Warriors.JonSnow;
 import Warriors.TheHound;
 
+import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.LinkedList;
@@ -69,7 +71,8 @@ public class RunGame {
       System.out.println(b.toString());
       initialData(b);
       String move = "";
-          while (numOfEnemies > 0 & b.isAlive()) {
+      boolean finish =false;
+          while (numOfEnemies > 0 & b.isAlive() & !finish) {
               System.out.println(b.toString());
               System.out.println(p.description());
               Scanner in = new Scanner(System.in);
@@ -203,13 +206,47 @@ public class RunGame {
                       }
                   }
                   numOfEnemies =b.getNumOfEnemies();
+                  moveOrder.notifyGameTick();
                   if(numOfEnemies==0& p.isAlive()){// change the board
                       levelIdx++;
-                     b =new Board(levels[levelIdx],p);
-                     initialData(b);
+                      if(levelIdx!=4) {
+                          b = new Board(levels[levelIdx], p);
+                          initialData(b);
+                      }
+                      else{
+                          int width = 300;
+                          int height = 30;
+
+                          //BufferedImage image = ImageIO.read(new File("/Users/mkyong/Desktop/logo.jpg"));
+                          BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+                          Graphics g = image.getGraphics();
+                          g.setFont(new Font("SansSerif", Font.BOLD, 24));
+
+                          Graphics2D graphics = (Graphics2D) g;
+                          graphics.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
+                                  RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+                          graphics.drawString("VICTORY!!! U ROCK!!", 10, 20);
+                          for (int y = 0; y < height; y++) {
+                              StringBuilder sb = new StringBuilder();
+                              for (int xs = 0; xs < width; xs++) {
+
+                                  sb.append(image.getRGB(xs, y) == -16777216 ? " " : "$");
+
+                              }
+
+                              if (sb.toString().trim().isEmpty()) {
+                                  continue;
+                              }
+
+                              System.out.println(sb);
+                          }
+                          finish =true;
+                          }
                   }
       }
-      System.out.println(b.toString());
+          if(!finish) {
+              System.out.println(b.toString());
+          }
           if(!p.isAlive())
           {
               System.out.println("Player is Dead End Game");
@@ -225,7 +262,6 @@ public class RunGame {
           }
 
     private void initialData(Board b) {
-        //p = b.getPlayer();
         monsters = b.getMonsters();
         traps = b.getTraps();
         totalEnemies = new LinkedList<>();

@@ -53,8 +53,9 @@ public class Player extends Unit implements Visited {
               exp += e.getExperience();
               swap(this,e,board);
               info = e.death();
-              ans[2] = e.getName() + " died " + this.name + " gained " + info[0] + " experience points";
               e.onDeath();
+              ans[2] = e.getName() + " died " + this.name + " gained " + info[0] + " experience points";
+
           }
           else{
               ans[2] ="";
@@ -74,7 +75,7 @@ public class Player extends Unit implements Visited {
         return out.substring(0, out.length()-1);
     }
 
-    private void swap(Player player, Enemy e, LinkedList<Tile> board) {
+    protected void swap(Player player, Enemy e, LinkedList<Tile> board) {
         int playerPos = board.indexOf(player);
         board.remove(player);
         board.add(playerPos, new EmptyTile(player.getX(), player.getY()));
@@ -140,5 +141,13 @@ public class Player extends Unit implements Visited {
     public int getExp(){
         return exp;
     }
+    public String onAbilityCastAttempt(LinkedList<Enemy> enemies, LinkedList<Tile> board) {
+        return "";
+    }
+
+    public String cast(LinkedList<Enemy> enemies,LinkedList<Tile> board) {
+        return "";
+    }
+
 
 }

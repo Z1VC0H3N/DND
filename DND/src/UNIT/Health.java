@@ -1,4 +1,4 @@
-package utility;
+package UNIT;
 
 public class Health {
     private int healthPool;
@@ -21,6 +21,6 @@ public class Health {
         return healthAmount;
     }
     public String toString(){
-        return "healthAmount: "+healthAmount +", healthPool: "+healthPool;
+        return " healthAmount: "+healthAmount +" healthPool: "+healthPool;
     }
 }

@@ -1,6 +1,6 @@
 package PlayerTypes;
 
-import TILE.tile;
+import TILE.Tile;
 import UNIT.Enemy;
 import UNIT.Player;
 
@@ -10,8 +10,6 @@ import UNIT.Player;
  *  The mage cannot cast the ability if current mana < cost
  */
 public class Mage extends Player {
-    private int abilityCooldown ;// the number of game ticks required to cast ability again
-    private int remainingCooldown;
     private int manaPool;//: Integer, holds the maximal value of mana
     private int currentMana;
     private int manaCost;//: Integer, ability cost
@@ -19,14 +17,14 @@ public class Mage extends Player {
     private int hitsCount;//maximal number of times a single cast of the ability can hit
     private int abilityRange;
 
-    public Mage(int x, int y, String name, int healthPool, int healthAmount, int attack, int defense,int abilityCooldown,int manaPool,int manaCost,int hitsCount,int abilityRange) {
-        super(x, y, name, healthPool, healthAmount, attack, defense, "Blizzard");
+    public Mage(int x, int y,String name, int healthPool, int healthAmount, int attack, int defense,int manaPool,int manaCost,int spellPower,int hitsCount,int abilityRange) {
+        super(x, y,name, healthPool, healthAmount, attack, defense, "Blizzard");
         this.manaPool=manaPool;
         this.currentMana=manaPool/4;
-        this.abilityCooldown=abilityCooldown;
         this.manaCost=manaCost;
         this.hitsCount=hitsCount;
         this.abilityRange=abilityRange;
+        this.spellPower=spellPower;
     }
     public String levelUp(){
         if (exp > 50*this.playerLevel) {
@@ -37,14 +35,6 @@ public class Mage extends Player {
             return this.name+" reached level: "+this.playerLevel+"and has :+"+health.toString()+"and has :+"+attack+" Attack "+"+and has "+defense+" Defence" +"and has "+manaPool+ " manaPool"+"and has "+spellPower +"spell Power";
         }
         return "";
-    }
-
-    public int getAbilityCooldown() {
-        return abilityCooldown;
-    }
-
-    public int getRemainingCooldown() {
-        return remainingCooldown;
     }
 
     public int getManaPool() {
@@ -71,7 +61,7 @@ public class Mage extends Player {
         return abilityRange;
     }
 
-    public String cast(Enemy e , TILE.tile[][] board) {
+    public String cast(Enemy e , Tile[][] board) {
         //todo;
         //hits ← 0
         //while (hits < hits count) ∧ (∃ living enemy s.t. range(enemy, player) < ability range) do
@@ -81,7 +71,7 @@ public class Mage extends Player {
         //- hits ← hits + 1
         return "";
     }
-    public String onAbilityCastAttempt(Enemy[] enemies ,TILE.tile[][] board) {
+    public String onAbilityCastAttempt(Enemy[] enemies , Tile[][] board) {
         return "";
         //todo;
     }
@@ -89,4 +79,6 @@ public class Mage extends Player {
     public void gameTick() {
        currentMana=Math.min(manaPool,currentMana+playerLevel);
     }
+    public String description(){
+        return super.description()+" Mana :" +this.currentMana+"/"+this.manaPool+" Spell Power :"+spellPower;    }
 }

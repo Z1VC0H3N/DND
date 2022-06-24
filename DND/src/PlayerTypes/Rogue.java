@@ -1,5 +1,6 @@
 package PlayerTypes;
 
+import TILE.Tile;
 import UNIT.Enemy;
 import UNIT.Player;
 
@@ -25,7 +26,7 @@ public class Rogue extends Player {
         }
         return "";
     }
-    public String cast(Enemy e , TILE.tile[][] board){
+    public String cast(Enemy e , Tile[][] board){
         //todo
         //- current energy ← current energy − cost
         //- For each enemy within range < 2, deal damage (reduce health value) equals to the rogue’s
@@ -34,5 +35,8 @@ public class Rogue extends Player {
     }
     public void gameTick(){
         energy=Math.min(energy+90,100);
+    }
+    public String description(){
+        return super.description()+ " Energy: "+energy+"/100";
     }
 }

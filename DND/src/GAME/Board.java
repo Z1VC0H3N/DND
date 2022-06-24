@@ -9,7 +9,6 @@ import Warriors.*;
 import Mages.*;
 import Hunters.*;
 import Rogues.*;
-import MonsterTypes.*;
 import TrapsTypes.*;
 
 import java.io.*;
@@ -28,16 +27,9 @@ public class Board {
     private Player hero =null ;
     private File level;
     private int numOfHero;
-
-//    public GAME.Board(File f, int numOfPlayer) throws IOException {
-//        this.level = f;
-//        parseFile(level);
-//        this.numOfHero = numOfPlayer;
-//    }
     public Board(File f,int numOfPlayer){
         this.level=f;
         this.numOfHero=numOfPlayer;
-        //this.hero=p;
         try {
             parseFile(f);
         } catch (IOException e) {
@@ -123,52 +115,52 @@ public class Board {
             case ('@'):
                 return hero;
             case ('s'):
-                LannisterSolider l =new LannisterSolider(x,y);
+                Monster l = new Monster(x,y,80,8,3,25,3,'s',"Lannister Solider");
                 l.setDeathCallBack(()->enemies.remove(l));
                 enemies.add(l);// dont know why maybe we will know
                 return l;
             case ('k'):
-                LannisterKnight k =new LannisterKnight(x,y);
+                Monster k =new Monster(x,y,200,14,8,50,4,'k',"Lannister Knight");
                 k.setDeathCallBack(()->enemies.remove(k));
                 enemies.add(k);
                 return k;
             case ('q'):
-                QueensGuard qg =new QueensGuard(x,y);
+                Monster qg =new Monster(x,y,400,20,15,100,5,'q',"Queen’s Guard");
                 qg.setDeathCallBack(()->enemies.remove(qg));
                 enemies.add(qg);
                 return qg;
             case ('z'):
-                Wright z =new Wright(x,y);
+                Monster z =new Monster(x,y,600,20,15,100,3,'z',"Wright");
                 z.setDeathCallBack(()->enemies.remove(z));
                 enemies.add(z);
                 return z;
             case ('b'):
-                BearWright b =new BearWright(x,y);
+                Monster b =new Monster(x,y,1000,75,30,250,4,'b',"Bear-Wright");
                 b.setDeathCallBack(()->enemies.remove(b));
                 enemies.add(b);
                 return b;
             case ('g'):
-                GiantWright g =new GiantWright(x,y);
+                Monster g =new Monster(x,y,1500,100,40,500,5,'g',"Gaint-Wright");
                 g.setDeathCallBack(()->enemies.remove(g));
                 enemies.add(g);
                 return g;
             case ('w'):
-                WhiteWalker w = new WhiteWalker(x,y);
+                Monster w = new Monster(x,y,2000,150,50,1000,6, 'w',"White Walker");
                 w.setDeathCallBack(()->enemies.remove(w));
                 enemies.add(w);
                 return w;
             case ('M'):
-                TheMountain m = new TheMountain(x,y);
+                Monster m = new Monster(x,y,1000,60,25,500,6,'M',"The Mountain");
                 m.setDeathCallBack(()->enemies.remove(m));
                 enemies.add(m);
                 return m;
             case ('C'):
-                QueenCersei c =new QueenCersei(x,y);
+                Monster c =new Monster(x,y,100,10,10,1000,1,'C',"Queen Cersei");
                 c.setDeathCallBack(()->enemies.remove(c));
                 enemies.add(c);
                 return c;
             case ('K'):
-                NightsKing K =new NightsKing(x,y);
+                Monster K =new Monster(x,y,5000,300,150,5000,8,'K',"Night’s King");
                 K.setDeathCallBack(()->enemies.remove(K));
                 enemies.add(K);
                 return K;
@@ -245,5 +237,20 @@ public class Board {
 
     public Tile getTile(int x, int y) {
         return units.get(length*y+x);
+    }
+
+    public String swap(int x, int y) {
+        if(x > this.length| y>=this.height){
+            return "bad location";
+        }
+        int playerPos = length*hero.getY()+hero.getX();
+        units.remove(hero);
+        units.add(playerPos, new EmptyTile(hero.getX(), hero.getY()));
+        int enemyPos = length*y+x;
+        units.remove(enemyPos);
+        units.add(enemyPos, hero);
+        Position p =new Position(x,y);
+        hero.setPosition(p);
+        return "nice jump G";
     }
 }

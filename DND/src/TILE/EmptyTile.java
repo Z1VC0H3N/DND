@@ -1,7 +1,7 @@
 package TILE;
 
-import Interactions.Visited;
-import Interactions.Visitor;
+import Interfaces.Visited;
+import Interfaces.Visitor;
 
 import java.util.LinkedList;
 

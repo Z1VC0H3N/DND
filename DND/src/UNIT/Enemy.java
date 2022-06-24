@@ -1,6 +1,6 @@
 package UNIT;
 
-import Interactions.DeathCallBack;
+import Interfaces.DeathCallBack;
 import TILE.Tile;
 
 import java.util.LinkedList;

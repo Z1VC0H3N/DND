@@ -1,4 +1,4 @@
-package Interactions;
+package Interfaces;
 
 
 import EnemyTypes.Monster;

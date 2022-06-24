@@ -4,6 +4,8 @@ import TILE.Tile;
 import UNIT.Enemy;
 import UNIT.Player;
 
+import java.util.LinkedList;
+
 /**
  * Special ability: Blizzard, randomly hit enemies within range for an amount equals to the mage’s
  * spell power at the cost of mana.
@@ -61,18 +63,66 @@ public class Mage extends Player {
         return abilityRange;
     }
 
-    public String cast(Enemy e , Tile[][] board) {
-        //todo;
-        //hits ← 0
-        //while (hits < hits count) ∧ (∃ living enemy s.t. range(enemy, player) < ability range) do
-        //- Select random enemy within ability range.
-        //- Deal damage (reduce health value) to the chosen enemy for an amount equal to spell power
-        //(each enemy may try to defend itself).
-        //- hits ← hits + 1
-        return "";
+    public String cast(Enemy e , LinkedList<Tile> board) {
+        int attPoints=this.spellPower;
+        int defPoints=(int)(Math.random()*e.getDefense()+1)-1;
+        String[]ans=new String[5];
+        for(int i=0;i<ans.length;i++)
+            ans[i]="";
+        ans[0]=this.name+ " used "+this.specialAbility;
+        ans[1]=e.getName()+" rolled "+defPoints+" defence points";
+        int[] information=new int[3];
+        int damage = attPoints - defPoints;
+        if(damage>0){
+            e.decreaseHealth(damage);
+            if(!e.isAlive()) {
+                exp += e.getExperience();
+                swap(this,e,board);
+                information = e.death();
+                ans[2] = e.getName() + " died " + this.name + " gained " + information[0] + " experience points";
+                e.onDeath();
+            }
+            else{
+                ans[2] ="";
+            }
+        }
+        else {
+            damage = 0;
+        }
+        ans[3]=this.name+" did "+damage+" damage to "+e.getName();
+        while(this.exp>=50*this.playerLevel) {
+            ans[4] = ans[4] + this.levelUp() +",";
+        }
+        String out ="";
+        for(int x =0;x<5;x++){
+            out=out+ans[x]+",";
+        }
+        return out.substring(0, out.length()-1);
     }
-    public String onAbilityCastAttempt(Enemy[] enemies , Tile[][] board) {
-        return "";
+
+    public String cast(LinkedList<Enemy> enemies, LinkedList<Tile> board) {
+        return onAbilityCastAttempt(enemies,board);
+    }
+
+    public String onAbilityCastAttempt(LinkedList<Enemy> enemies , LinkedList<Tile> board) {
+        if(this.manaCost> currentMana){
+            return this.name+" tried to use "+this.specialAbility+" but there is a cooldown: "+(manaCost-manaPool);
+        }
+        String ans ="";
+        LinkedList<Enemy> inRange = new LinkedList<>();
+        for(Enemy e :enemies){
+         if(this.range(e)<abilityRange){
+             inRange.addLast(e);
+         }
+        }
+        currentMana =currentMana -manaCost;
+        int hits =0;
+        while(hits < hitsCount & inRange.size()!=0){
+            int chosen=(int)(Math.random()*inRange.size()+1)-1;
+            ans += cast(inRange.get(chosen), board)+",";
+            hits++;
+        }
+        return ans.substring(0,ans.length()-1);
         //todo;
     }
 

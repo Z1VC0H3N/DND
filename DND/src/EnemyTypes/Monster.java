@@ -1,8 +1,8 @@
 package EnemyTypes;
 
 import GAME.Board;
-import Interactions.Visited;
-import Interactions.Visitor;
+import Interfaces.Visited;
+import Interfaces.Visitor;
 import TILE.Tile;
 import UNIT.Enemy;
 import UNIT.Player;
@@ -15,8 +15,8 @@ import java.util.*;
 
 public class Monster extends Enemy implements Visited {
     protected int visionRange;
-    public Monster(int x, int y, int healthPool, int healthAmount, int attack, int defense,int exp,int visionRange) {
-        super(x, y, 'W', "monster", healthPool, healthAmount, attack, defense,exp);
+    public Monster(int x, int y, int healthPool ,int attack, int defense,int exp,int visionRange,char tile,String name) {
+        super(x, y, tile, name, healthPool, healthPool, attack, defense,exp);
         this.visionRange=visionRange;
     }
 

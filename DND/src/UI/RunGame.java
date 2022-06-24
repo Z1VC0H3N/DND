@@ -6,7 +6,7 @@ import Interactions.EnemyMovement;
 import Interactions.MoveOrder;
 import Hunters.Ygritte;
 import Interactions.PlayerMovement;
-import Interactions.Visited;
+import Interfaces.Visited;
 import Mages.Melisandre;
 import Mages.ThorosOfMyr;
 import Rogues.AryaStark;
@@ -21,6 +21,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.security.PrivilegedExceptionAction;
 import java.util.LinkedList;
 import java.util.Scanner;
 
@@ -132,6 +133,22 @@ public class RunGame {
                               p.levelUp();
                           }
                           break;
+                      case "jump":
+                          System.out.println("enter location u want to go : example -> 4,5 ");
+                          String jump = in.nextLine();
+                          try {
+                              int X =Integer.parseInt(jump.substring(0,jump.indexOf(',')));
+                              int Y =Integer.parseInt(jump.substring(jump.indexOf(',')+1));
+                              if(!b.getStringOfTile(X, Y).equals(".")){
+                                  System.out.println("U cant go there");
+                              }
+                              else{
+                                  move = b.swap(X,Y);
+                                  break;
+                              }
+                          }catch (Exception e){
+                              System.out.println("U didnt enter a proper input");
+                          }
                       default:
                           System.out.println("u must peek one character :");
                           System.out.println("w - Move up \n ");
@@ -192,7 +209,7 @@ public class RunGame {
                           System.out.println(p.description());
                       }
                       move = moveOrder.move(em, v, b.getBoard());
-                      //prints the scenerio that happened
+                      //prints the scenario that happened
                       if (!move.equals("")) {
                           int count = 0;
                           for (int i = 0; i < move.length(); i++)
@@ -305,99 +322,7 @@ public class RunGame {
 //                  "███████╗███████╗ ╚████╔╝ ███████╗███████╗    ╚██████╔╝██║     ██╗\n" +
 //                  "╚══════╝╚══════╝  ╚═══╝  ╚══════╝╚══════╝     ╚═════╝ ╚═╝     ╚═╝\n" );
 //      }
-//      public void printLevel(GameLevel level)
-//      {
-//          System.out.println(level.toString());
-//      }
-//      public void printLoseGame()
-//      {
-//          System.out.println("Player is Dead End Game");
-//          System.out.println(
-//                  " __     __           _                    _ \n" +
-//                          " \\ \\   / /          | |                  | |\n" +
-//                          "  \\ \\_/ /__  _   _  | |     ___  ___  ___| |\n" +
-//                          "   \\   / _ \\| | | | | |    / _ \\/ __|/ _ \\ |\n" +
-//                          "    | | (_) | |_| | | |___| (_) \\__ \\  __/_|\n" +
-//                          "    |_|\\___/ \\__,_| |______\\___/|___/\\___(_)");
-//      }
 
 
-//      try {
-//          while(b.isAlive())
-//          {
-//                try {
-//                    choiceStr = scanner.next();
-//                } catch (Exception e) {
-//                    System.out.println("you must enter only 1 digit number");
-//
-//                }
-//                if(choiceStr=="w" |choiceStr=="a" |choiceStr=="s" |choiceStr=="d" |choiceStr=="q" )
-//                {
-//                 b.movePlayer(choiceStr);
-//                }
-//                else if(choiceStr=="e")
-//                    {
-//                     b.cast();
-//                    }
-//                else {
-//                    System.out.println("u must peek one character :");
-//                    System.out.println("w - Move up \n ");
-//                    System.out.println("s - Move down \n");
-//                    System.out.println("a - Move left \n");
-//                    System.out.println("d - Move right \n :");
-//                    System.out.println("e - Cast special ability \n");
-//                    System.out.println("q - Do nothing \n");
-//                    makeMistake=true;
-//                }
-//                if(!makeMistake)
-//                {
-//                    if(b.hasNoEnemiesLeft())
-//                    {
-//                        levelIdx++;
-//                        //board = new GAME.Board(levels[levelIdx],board.getPlayer());
-//                    }
-//                }
-//
-//          }
-//      } catch (Exception e){
-//          System.out.println("something went wrong");
-//          //startGame();
-//      }
-//
-//
-//      LinkedList<Tile> board = new LinkedList<>();
-//      for(int i=0;i<10;i++){
-//          for(int j=0;j<10;j++){
-//              board.add(new Tile('.', i, j,""));
-//          }
-//      }
-//      EnemyTypes.Monster m=new EnemyTypes.Monster(2,1,10,10,10,10,3,3);
-//      Player p = new Player(2,3,"ziv",10,10,1,1,"");
-//      Wall w2 =new Wall(2,2);
-//      Wall w1 =new Wall(2,1);
-//      Wall w0 =new Wall(2,0);
-//      Wall w3 =new Wall(2,3);
-//      Wall w4 =new Wall(2,4);
-//      board.set(11,m);
-//      //board.set(2,w0);
-//      board.set(7,w1);
-//      board.set(12,w2);
-//      board.set(17,w3);
-//      board.set(22,w4);
-//      board.set(13,p);
-//      Set<Position> set =new HashSet<>();
-//      int i=11;
-//      for(Tile t : board){
-//          set.add(t.getPosition());
-//          System.out.print(t.toString());
-//          if(i%10==0){
-//              System.out.println('\n');
-//              i=11;
-//          }
-//          i++;
-//      }
-//
-//      m.setShortPaths(m,board);
-//      System.out.println(p.getPosition().getShortestPath());
   }
 

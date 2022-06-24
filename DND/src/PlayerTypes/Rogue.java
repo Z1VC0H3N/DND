@@ -4,6 +4,8 @@ import TILE.Tile;
 import UNIT.Enemy;
 import UNIT.Player;
 
+import java.util.LinkedList;
+
 /**
  * Special ability: Fan of Knives, hits everyone around the rogue for an amount equals to the
  * rogue’s attack points at the cost of energy.
@@ -26,12 +28,61 @@ public class Rogue extends Player {
         }
         return "";
     }
-    public String cast(Enemy e , Tile[][] board){
-        //todo
-        //- current energy ← current energy − cost
-        //- For each enemy within range < 2, deal damage (reduce health value) equals to the rogue’s
-        //attack points (each enemy will try to defend itself)
-        return "";
+    public String cast(Enemy e , LinkedList<Tile> board){
+        int attPoints=(int)(this.attack);
+        int defPoints=(int)(Math.random()*e.getDefense()+1)-1;
+        String[]ans=new String[5];
+        for(int i=0;i<ans.length;i++)
+            ans[i]="";
+        ans[0]=this.name+ " used "+this.specialAbility;
+        ans[1]=e.getName()+" rolled "+defPoints+" defence points";
+        int[] information=new int[3];
+        int damage = attPoints - defPoints;
+        if(damage>0){
+            e.decreaseHealth(damage);
+            if(!e.isAlive()) {
+                exp += e.getExperience();
+                swap(this,e,board);
+                information = e.death();
+                ans[2] = e.getName() + " died " + this.name + " gained " + information[0] + " experience points";
+                e.onDeath();
+            }
+            else{
+                ans[2] ="";
+            }
+        }
+        else {
+            damage = 0;
+        }
+        ans[3]=this.name+" did "+damage+" damage to "+e.getName();
+        while(this.exp>=50*this.playerLevel) {
+            ans[4] = ans[4] + this.levelUp() +",";
+        }
+        String out ="";
+        for(int x =0;x<5;x++){
+            out=out+ans[x]+",";
+        }
+        return out.substring(0, out.length()-1);
+    }
+    public String onAbilityCastAttempt(LinkedList<Enemy> enemies,LinkedList<Tile> board) {
+        if(cost > this.energy){
+            return "";
+        }
+        String ans ="";
+        LinkedList<Enemy> inRange = new LinkedList<>();
+        for(Enemy e : enemies){
+            if(this.range(e) <2){
+                inRange.addLast(e);
+            }
+        }
+        for(Enemy e : inRange){
+            ans += cast(e,board) +",";
+        }
+        return ans.substring(0,ans.length()-1);
+    }
+
+    public String cast(LinkedList<Enemy> enemies, LinkedList<Tile> board) {
+        return onAbilityCastAttempt(enemies,board);
     }
     public void gameTick(){
         energy=Math.min(energy+90,100);

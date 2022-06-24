@@ -43,10 +43,7 @@ public class Warrior extends Player {
                     ans = ans + this.cast(enemies.get(i), board) + ",";
                 }
             }
-
-
             remainingCooldown=abilityCooldown;
-
         }
         return ans;
 

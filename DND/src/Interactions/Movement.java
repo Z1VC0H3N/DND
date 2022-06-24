@@ -1,5 +1,7 @@
 package Interactions;
 
+import Interfaces.Visited;
+import Interfaces.Visitor;
 import TILE.Tile;
 
 import java.util.LinkedList;

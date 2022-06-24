@@ -1,8 +1,8 @@
-package Interactions;
+package Interfaces;
 
-import UNIT.Enemy;
 import Interactions.Movement;
-import Interactions.Visited;
+import UNIT.Enemy;
+import Interfaces.Visited;
 import TILE.Tile;
 
 import java.util.LinkedList;

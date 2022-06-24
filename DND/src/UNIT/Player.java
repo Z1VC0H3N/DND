@@ -1,11 +1,10 @@
 package UNIT;
 
 import EnemyTypes.Trap;
-import Interactions.Visited;
-import Interactions.Visitor;
+import Interfaces.Visited;
+import Interfaces.Visitor;
 import TILE.EmptyTile;
 import TILE.Tile;
-import UTILITY.Position;
 
 import java.util.LinkedList;
 
@@ -36,7 +35,6 @@ public class Player extends Unit implements Visited {
         return this.name+"  "+"Health:"+this.health.getHealthAmount()+"/"+ getHealthPool()+" Attack : "+this.attack+" Defence : "+this.defense+ " Level : "+this.playerLevel+" Experience : "+this.exp +"/50";
     }
     public String attack(Enemy e, LinkedList<Tile> board){
-        //todo; transfer from [] to list
         String[]ans=new String[5];
         for(int i=0;i<ans.length;i++){
             ans[i] ="";

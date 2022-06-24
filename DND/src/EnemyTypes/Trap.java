@@ -1,7 +1,7 @@
 package EnemyTypes;
 
-import Interactions.Visited;
-import Interactions.Visitor;
+import Interfaces.Visited;
+import Interfaces.Visitor;
 import TILE.Tile;
 import UNIT.Enemy;
 import UNIT.Player;

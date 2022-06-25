@@ -1,10 +1,10 @@
-package UNIT;
+package backend.UNIT;
 
-import EnemyTypes.Trap;
-import Interfaces.Visited;
-import Interfaces.Visitor;
-import TILE.EmptyTile;
-import TILE.Tile;
+import backend.EnemyTypes.Trap;
+import backend.Interfaces.Visited;
+import backend.Interfaces.Visitor;
+import backend.TILE.EmptyTile;
+import backend.TILE.Tile;
 
 import java.util.LinkedList;
 
@@ -35,15 +35,18 @@ public class Player extends Unit implements Visited {
         return this.name+"  "+"Health:"+this.health.getHealthAmount()+"/"+ getHealthPool()+" Attack : "+this.attack+" Defence : "+this.defense+ " Level : "+this.playerLevel+" Experience : "+this.exp +"/50";
     }
     public String attack(Enemy e, LinkedList<Tile> board){
-        String[]ans=new String[5];
+        String[]ans=new String[8];
         for(int i=0;i<ans.length;i++){
             ans[i] ="";
         }
         int[] info = new int[3];
         int attPoints=(int)(int)(Math.random()*this.attack+1)-1;
         int defPoints=(int)(int)(Math.random()*e.getDefense()+1)-1;
-        ans[0]=this.name+" rolled "+attPoints+" attack points";
-        ans[1]=e.getName()+" rolled "+defPoints+" defence points";
+        ans[0] = this.getName() + " engaged in combat with " +e.getName();
+        ans[1] = this.description();
+        ans[2] = e.description();
+        ans[3]=this.name+" rolled "+attPoints+" attack points";
+        ans[4]=e.getName()+" rolled "+defPoints+" defence points";
         int damage = attPoints - defPoints;
         if(damage>0){
           e.decreaseHealth(damage);
@@ -52,22 +55,22 @@ public class Player extends Unit implements Visited {
               swap(this,e,board);
               info = e.death();
               e.onDeath();
-              ans[2] = e.getName() + " died " + this.name + " gained " + info[0] + " experience points";
+              ans[5] = e.getName() + " died " + this.name + " gained " + info[0] + " experience points";
 
           }
           else{
-              ans[2] ="";
+              ans[5] ="";
           }
         }
         else {
             damage = 0;
         }
-        ans[3]=this.name+" did "+damage+" damage to "+e.getName();
+        ans[6]=this.name+" did "+damage+" damage to "+e.getName();
         while(this.exp>=50*this.playerLevel) {
-            ans[4] = ans[4] + this.levelUp() +",";
+            ans[7] = ans[7] + this.levelUp() +",";
         }
         String out ="";
-        for(int x =0;x<5;x++){
+        for(int x =0;x<8;x++){
             out=out+ans[x]+",";
         }
         return out.substring(0, out.length()-1);
@@ -148,4 +151,7 @@ public class Player extends Unit implements Visited {
     }
 
 
+    public int getLevel() {
+        return playerLevel;
+    }
 }

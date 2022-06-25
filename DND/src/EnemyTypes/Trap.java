@@ -1,10 +1,12 @@
 package EnemyTypes;
 
+import GAME.Board;
 import Interfaces.Visited;
 import Interfaces.Visitor;
 import TILE.Tile;
 import UNIT.Enemy;
 import UNIT.Player;
+import UTILITY.Position;
 
 import java.util.LinkedList;
 
@@ -61,5 +63,8 @@ public class Trap extends Enemy implements Visited {
         return s;
     }
 
-
+    @Override
+    public Position preformMovement(Player p, LinkedList<Tile> board, Board b) {
+        return this.getPosition();
+    }
 }

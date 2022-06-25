@@ -168,48 +168,25 @@ public class RunGame {
                   for (int i = 0; i < move.length(); i++)
                       if (move.charAt(i) == ',') {
                           if (!move.substring(count, i).equals(""))
-                              System.out.println(move.substring(count, i));
+                              if(!move.substring(count, i).equals(" "))
+                                 System.out.println(move.substring(count, i));
                           count = i + 1;
                       }
 
               }
-              // now we preform an monster movement
-              // monster can attack only player
-              for (Monster e : monsters) {
-                  EnemyMovement em = new EnemyMovement(e);
-                  Visited v;
-                  Position pos = e.preformMovement(p, b.getBoard(), b); // using dijkstra
-                  v = b.getTile(pos.getX(), pos.getY());
-                  if (b.getTile(pos.getX(), pos.getY()).getSign() == '@') {
-                      System.out.println(e.getName() + " engaged in combat with " + p.getName() + ".");
-                      System.out.println(e.description());
-                      System.out.println(p.description());
-                  }
-                  move = moveOrder.move(em, v, b.getBoard());
-                  //prints the scenerio that happened
-                  if (!move.equals("")) {
-                      int count = 0;
-                      for (int i = 0; i < move.length(); i++)
-                          if (move.charAt(i) == ',') {
-                              if (!move.substring(count, i).equals(""))
-                                  System.out.println(move.substring(count, i));
-                              count = i + 1;
-                          }
-                  } else {
+              // now we preform an enemy movement
 
-                  }
-              }
-                  for (Trap e : traps) {
+                  for(Enemy e:totalEnemies){
                       EnemyMovement em = new EnemyMovement(e);
                       Visited v;
-                      v = b.getTile(p.getX(), p.getY());
-                      if (e.range(p)<2) {
-                          System.out.println(e.getName() + " engaged in combat with " + p.getName()+ ".");
+                      Position pos = e.preformMovement(p, b.getBoard(), b); // using dijkstra
+                      v = b.getTile(pos.getX(), pos.getY());
+                      if (b.getTile(pos.getX(), pos.getY()).getSign() == '@') {
+                          System.out.println(e.getName() + " engaged in combat with " + p.getName() + ".");
                           System.out.println(e.description());
                           System.out.println(p.description());
                       }
                       move = moveOrder.move(em, v, b.getBoard());
-                      //prints the scenario that happened
                       if (!move.equals("")) {
                           int count = 0;
                           for (int i = 0; i < move.length(); i++)
@@ -218,8 +195,6 @@ public class RunGame {
                                       System.out.println(move.substring(count, i));
                                   count = i + 1;
                               }
-                      } else {
-
                       }
                   }
                   numOfEnemies =b.getNumOfEnemies();

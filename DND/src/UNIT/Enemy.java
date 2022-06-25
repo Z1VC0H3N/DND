@@ -1,7 +1,9 @@
 package UNIT;
 
+import GAME.Board;
 import Interfaces.DeathCallBack;
 import TILE.Tile;
+import UTILITY.Position;
 
 import java.util.LinkedList;
 
@@ -57,4 +59,7 @@ public class Enemy extends Unit  {
         return "";
     }
 
+    public Position preformMovement(Player p, LinkedList<Tile> board, Board b) {
+        return null;
+    }
 }

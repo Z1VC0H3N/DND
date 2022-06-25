@@ -39,30 +39,6 @@ public class Mage extends Player {
         return "";
     }
 
-    public int getManaPool() {
-        return manaPool;
-    }
-
-    public int getCurrentMana() {
-        return currentMana;
-    }
-
-    public int getManaCost() {
-        return manaCost;
-    }
-
-    public int getSpellPower() {
-        return spellPower;
-    }
-
-    public int getHitsCount() {
-        return hitsCount;
-    }
-
-    public int getAbilityRange() {
-        return abilityRange;
-    }
-
     public String cast(Enemy e , LinkedList<Tile> board) {
         int attPoints=this.spellPower;
         int defPoints=(int)(Math.random()*e.getDefense()+1)-1;

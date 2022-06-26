@@ -1,6 +1,6 @@
 package backend.Interfaces;
 
-import backend.TILE.Tile;
+import backend.UNIT.Tile;
 
 import java.util.LinkedList;
 

@@ -1,7 +1,6 @@
 package backend.GAME;
 
 import backend.EnemyTypes.Monster;
-import backend.EnemyTypes.Trap;
 import backend.TILE.*;
 import backend.UNIT.*;
 import backend.UTILITY.Position;
@@ -12,20 +11,17 @@ import backend.Rogues.*;
 import backend.TrapsTypes.*;
 
 import java.io.*;
-import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.Map;
 
 public class Board {
     private LinkedList<Tile> units;
-    private Map<Position,Tile> positionTileMap;
     private int length;
     private int height;
-    private LinkedList<Monster> enemies;
-    private LinkedList<Trap> traps;
+    private LinkedList<Enemy> enemies;
     private Player hero =null ;
     private File level;
     private int numOfHero;
+    private Object lock =new Object();
     public Board(File f,int numOfPlayer){
         this.level=f;
         this.numOfHero=numOfPlayer;
@@ -80,8 +76,6 @@ public class Board {
             this.height = rows;
             units = new LinkedList<>();
             enemies = new LinkedList<>();
-            traps =new LinkedList<>();
-            positionTileMap=new HashMap<>();
             BufferedReader sec = new BufferedReader(new FileReader(f));
             str = "";
             int idy = 0;
@@ -98,7 +92,6 @@ public class Board {
                     }
                     Tile t =getTile(str.charAt(i), i, idy);
                     units.addLast(t);
-                    positionTileMap.put(new Position(i,idy),t);
                 }
                 idy++;
             }
@@ -115,7 +108,8 @@ public class Board {
                 return hero;
             case ('s'):
                 Monster l = new Monster(x,y,80,8,3,25,3,'s',"Lannister Solider");
-                l.setDeathCallBack(()->enemies.remove(l));
+                l.setDeathCallBack(()->{enemies.remove(l);
+                });
                 enemies.add(l);// dont know why maybe we will know
                 return l;
             case ('k'):
@@ -165,18 +159,18 @@ public class Board {
                 return K;
             case ('B'):
                 BonusTrap B =new BonusTrap(x,y);
-                B.setDeathCallBack(()->traps.remove(B));
-                traps.add(B);
+                B.setDeathCallBack(()->enemies.remove(B));
+                enemies.add(B);
                 return B;
             case ('Q'):
                 QueensTrap q =new QueensTrap(x,y);
-                q.setDeathCallBack(()->traps.remove(q));
-                traps.add(q);
+                q.setDeathCallBack(()->enemies.remove(q));
+                enemies.add(q);
                 return q;
             case ('D'):
                 DeathTrap d =new DeathTrap(x,y);
-                d.setDeathCallBack(()-> traps.remove(d));
-                traps.add(d);
+                d.setDeathCallBack(()-> enemies.remove(d));
+                enemies.add(d);
                 return d;
         }
         return null;
@@ -186,13 +180,10 @@ public class Board {
 		return units;
 	}
 
-	public LinkedList<Monster> getMonsters(){
+	public LinkedList<Enemy> getMonsters(){
 		return enemies;
 	}
 
-	public LinkedList<Trap> getTraps(){
-		return traps;
-	}
 
 	public Player getPlayer() {
 		return hero;
@@ -202,14 +193,8 @@ public class Board {
     }
 
 	public int getNumOfEnemies() {
-		return enemies.size() +traps.size();
+		return enemies.size();
 	}
-	public int getNumOfMonsters(){
-        return enemies.size();
-    }
-	public int getNumOfTraps(){
-        return traps.size();
-    }
     public String getStringOfTile(int x,int y){
         return units.get(length*y+x).toString();
     }
@@ -248,9 +233,6 @@ public class Board {
     }
 
     public LinkedList<Enemy> getEnemies() {
-        LinkedList<Enemy> totalEnemies = new LinkedList<>();
-        totalEnemies.addAll(enemies);
-        totalEnemies.addAll(traps);
-        return totalEnemies;
+        return enemies;
     }
 }

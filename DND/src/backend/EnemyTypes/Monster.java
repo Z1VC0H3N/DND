@@ -3,7 +3,7 @@ package backend.EnemyTypes;
 import backend.GAME.Board;
 import backend.Interfaces.Visited;
 import backend.Interfaces.Visitor;
-import backend.TILE.Tile;
+import backend.UNIT.Tile;
 import backend.UNIT.Enemy;
 import backend.UNIT.Player;
 import backend.UTILITY.Graph;

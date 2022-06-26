@@ -1,7 +1,7 @@
 package backend.PlayerTypes;
 
 import backend.TILE.EmptyTile;
-import backend.TILE.Tile;
+import backend.UNIT.Tile;
 import backend.UNIT.Enemy;
 import backend.UNIT.Player;
 
@@ -54,7 +54,7 @@ public class Mage extends Player {
             e.decreaseHealth(damage);
             if(!e.isAlive()) {
                 exp += e.getExperience();
-                swap(this,e,board);
+                castSwap(this,e,board);
                 // we dont swap in special ability
                 information = e.death();
                 ans[2] = e.getName() + " died " + this.name + " gained " + information[0] + " experience points";
@@ -82,8 +82,7 @@ public class Mage extends Player {
         return onAbilityCastAttempt(enemies,board);
     }
 
-    @Override
-    protected void swap(Player player, Enemy e, LinkedList<Tile> board) {
+    protected void castSwap(Player player, Enemy e, LinkedList<Tile> board) {
             int enemyPos = board.indexOf(e);
             board.remove(e);
             board.add(enemyPos, new EmptyTile(player.getX(), player.getY()));

@@ -4,11 +4,10 @@ import backend.EnemyTypes.Trap;
 import backend.Interfaces.Visited;
 import backend.Interfaces.Visitor;
 import backend.TILE.EmptyTile;
-import backend.TILE.Tile;
 
 import java.util.LinkedList;
 
-public class Player extends Unit implements Visited {
+public abstract class Player extends Unit implements Visited {
     protected int exp;
     protected int playerLevel;
     protected String specialAbility;
@@ -32,7 +31,7 @@ public class Player extends Unit implements Visited {
         return "";
     }
     public String description() {
-        return this.name+"  "+"Health:"+this.health.getHealthAmount()+"/"+ getHealthPool()+" Attack : "+this.attack+" Defence : "+this.defense+ " Level : "+this.playerLevel+" Experience : "+this.exp +"/50";
+        return this.name+"  "+"Health:"+this.health.getHealthAmount()+"/"+ getHealthPool()+" Attack : "+this.attack+" Defence : "+this.defense+ " Level : "+this.playerLevel+" Experience : "+this.exp +"/"+50*playerLevel;
     }
     public String attack(Enemy e, LinkedList<Tile> board){
         String[]ans=new String[8];

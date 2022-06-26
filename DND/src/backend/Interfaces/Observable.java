@@ -2,7 +2,7 @@ package backend.Interfaces;
 
 import backend.Interactions.Movement;
 import backend.UNIT.Enemy;
-import backend.TILE.Tile;
+import backend.UNIT.Tile;
 
 import java.util.LinkedList;
 

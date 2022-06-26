@@ -36,6 +36,9 @@ public class RunGame {
   private LinkedList<Enemy> totalEnemies;
   private int numOfEnemies;
   private PlayerMovement pm;
+  int time =0;
+  int currHealth =0;
+  int currDamage =0;
 
     public void startGame(String[] args) throws IOException {
         levelsPath = new File(args[0]);
@@ -105,9 +108,9 @@ public class RunGame {
                 // lets add some chits
 
                 case "killAll!":
-                    for (Enemy e : totalEnemies) {
-                        e.onDeath();
-                        p.setExp(p.getExp() + e.getExperience());
+                    while (!totalEnemies.isEmpty()){
+                        p.setExp(p.getExp() + totalEnemies.getFirst().getExperience());
+                        totalEnemies.getFirst().onDeath();
                         p.levelUp();
                     }
                     break;
@@ -126,6 +129,17 @@ public class RunGame {
                     } catch (Exception e) {
                         System.out.println("U didnt enter a proper input");
                     }
+                case "ultimate power!":
+                    time =5;
+                    currHealth =p.getHealthAmount();
+                    currDamage = p.getAttack();
+                    p.setHealthAmount(Integer.MAX_VALUE);
+                    p.setAttack(Integer.MAX_VALUE);
+                    break;
+                case "level up!":
+                    p.setExp(50*p.getLevel());
+                    p.levelUp();
+                    break;
                 default:
                     System.out.println("u must peek one character :");
                     System.out.println("w - Move up \n ");
@@ -148,7 +162,7 @@ public class RunGame {
                     }
 
             }
-            totalEnemies =b.getEnemies();
+            //totalEnemies =b.getEnemies();
             // now we preform an enemy movement
             for (Enemy e : totalEnemies) {
                 EnemyMovement em = new EnemyMovement(e);
@@ -167,6 +181,11 @@ public class RunGame {
             }
             numOfEnemies = b.getNumOfEnemies();
             moveOrder.notifyGameTick();
+            time--;
+            if(time == 0){
+                p.setAttack(currDamage);
+                p.setHealthAmount(currHealth);
+            }
             if (numOfEnemies == 0 & p.isAlive()) {// change the board
                 levelIdx++;
                 if (levelIdx != 4) {
@@ -222,50 +241,14 @@ public class RunGame {
           }
 
     private void initialData(Board b) {
-        monsters = b.getMonsters();
-        traps = b.getTraps();
-        totalEnemies = new LinkedList<>();
-        for (Monster m : monsters) {
-            totalEnemies.addLast(m);
-        }
-        for (Trap t : traps) {
-            totalEnemies.addLast(t);
-        }
+        totalEnemies =b.getEnemies();
         moveOrder.addObservers(p);
-        for (Trap t : traps) {
-            moveOrder.addObservers(t);
-        }
-        for (Monster m : monsters) {
-            moveOrder.addObservers(m);
+        for (Enemy e : totalEnemies) {
+            moveOrder.addObservers(e);
         }
         numOfEnemies = b.getNumOfEnemies();
         pm = new PlayerMovement(p);
     }
-//      public void printErrorMainArg()
-//      {
-//          System.out.println("Please run the code as follows:");
-//          System.out.println("java -jar hw3.jar <Path to directory of files>");
-//      }
-//      public void printEndGame(boolean playerDeath) {
-//          if (playerDeath){
-//              System.out.println("Game over!!!");
-//          }
-//          else {
-//              System.out.println("You won!!!");
-//          }
-//      }
-//      public void printEndLevel(int level)
-//      {
-//          System.out.println("Finish level: " + (level + 1));
-//          System.out.println("-----------------------------------------------------------");
-//          System.out.println("██╗     ███████╗██╗   ██╗███████╗██╗         ██╗   ██╗██████╗ ██╗\n" +
-//                  "██║     ██╔════╝██║   ██║██╔════╝██║         ██║   ██║██╔══██╗██║\n" +
-//                  "██║     █████╗  ██║   ██║█████╗  ██║         ██║   ██║██████╔╝██║\n" +
-//                  "██║     ██╔══╝  ╚██╗ ██╔╝██╔══╝  ██║         ██║   ██║██╔═══╝ ╚═╝\n" +
-//                  "███████╗███████╗ ╚████╔╝ ███████╗███████╗    ╚██████╔╝██║     ██╗\n" +
-//                  "╚══════╝╚══════╝  ╚═══╝  ╚══════╝╚══════╝     ╚═════╝ ╚═╝     ╚═╝\n" );
-//      }
-
 
   }
 

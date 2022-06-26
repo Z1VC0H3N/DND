@@ -3,7 +3,7 @@ package backend.Interactions;
 import backend.Interfaces.Observable;
 import backend.UNIT.Enemy;
 import backend.Interfaces.Visited;
-import backend.TILE.Tile;
+import backend.UNIT.Tile;
 
 import java.util.LinkedList;
 

@@ -1,4 +1,4 @@
-package backend.UNIT;
+package backend.UTILITY;
 
 public class Health {
     private int healthPool;

@@ -36,6 +36,10 @@ public class RunGame {
   private LinkedList<Enemy> totalEnemies;
   private int numOfEnemies;
   private PlayerMovement pm;
+  int time =0;
+  int currHealth =0;
+  int currDamage =0;
+  boolean cheater =false;
 
     public void startGame(String[] args) throws IOException {
         levelsPath = new File(args[0]);
@@ -105,11 +109,12 @@ public class RunGame {
                 // lets add some chits
 
                 case "killAll!":
-                    for (Enemy e : totalEnemies) {
-                        e.onDeath();
-                        p.setExp(p.getExp() + e.getExperience());
+                    while (!totalEnemies.isEmpty()){
+                        p.setExp(p.getExp() + totalEnemies.getFirst().getExperience());
+                        totalEnemies.getFirst().onDeath();
                         p.levelUp();
                     }
+                    cheater=true;
                     break;
                 case "jump":
                     System.out.println("enter location u want to go : example -> 4,5 ");
@@ -117,15 +122,38 @@ public class RunGame {
                     try {
                         int X = Integer.parseInt(jump.substring(0, jump.indexOf(',')));
                         int Y = Integer.parseInt(jump.substring(jump.indexOf(',') + 1));
-                        if (!b.getStringOfTile(X, Y).equals(".")) {
+                        if(X<0|Y<0){
                             System.out.println("U cant go there");
+                            break;
+                        }
+                        else if(X > b.getLength() |Y>=b.getHeight()){
+                            System.out.println("U cant go there");
+                            break;
+                        }
+                        else if (!b.getStringOfTile(X, Y).equals(".")) {
+                            System.out.println("U cant go there");
+                            break;
                         } else {
-                            move = b.swap(X, Y);
+                            System.out.println(b.swap(X, Y));
+                            cheater=true;
                             break;
                         }
                     } catch (Exception e) {
                         System.out.println("U didnt enter a proper input");
                     }
+                case "ultimate power!":
+                    time =5;
+                    currHealth =p.getHealthAmount();
+                    currDamage = p.getAttack();
+                    p.setHealthAmount(Integer.MAX_VALUE);
+                    p.setAttack(Integer.MAX_VALUE);
+                    cheater=true;
+                    break;
+                case "level up!":
+                    p.setExp(50*p.getLevel());
+                    p.levelUp();
+                    cheater=true;
+                    break;
                 default:
                     System.out.println("u must peek one character :");
                     System.out.println("w - Move up \n ");
@@ -148,11 +176,11 @@ public class RunGame {
                     }
 
             }
-            totalEnemies =b.getEnemies();
+            //totalEnemies =b.getEnemies();
             // now we preform an enemy movement
             for (Enemy e : totalEnemies) {
                 EnemyMovement em = new EnemyMovement(e);
-                Position pos = e.preformMovement(p, b.getBoard(), b); // using dijkstra
+                Position pos = e.preformMovement(p, b.getBoard()); // using dijkstra
                 v = b.getTile(pos.getX(), pos.getY());
                 move = moveOrder.move(em, v, b.getBoard());
                 if (!move.equals("")) {
@@ -167,15 +195,23 @@ public class RunGame {
             }
             numOfEnemies = b.getNumOfEnemies();
             moveOrder.notifyGameTick();
+            time--;
+            if(time == 0){
+                p.setAttack(currDamage);
+                p.setHealthAmount(currHealth);
+            }
             if (numOfEnemies == 0 & p.isAlive()) {// change the board
                 levelIdx++;
                 if (levelIdx != 4) {
                     b = new Board(levels[levelIdx], p);
                     initialData(b);
                 } else {
-                    int width = 300;
+                    int width = 200;
                     int height = 30;
-
+                    String toPrint ="VICTORY!!!";
+                    if(cheater){
+                        toPrint ="CHEATER!!";
+                    }
                     //BufferedImage image = ImageIO.read(new File("/Users/mkyong/Desktop/logo.jpg"));
                     BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
                     Graphics g = image.getGraphics();
@@ -184,7 +220,7 @@ public class RunGame {
                     Graphics2D graphics = (Graphics2D) g;
                     graphics.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
                             RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-                    graphics.drawString("VICTORY!!! U ROCK!!", 10, 20);
+                    graphics.drawString(toPrint, 10, 20);
                     for (int y = 0; y < height; y++) {
                         StringBuilder sb = new StringBuilder();
                         for (int xs = 0; xs < width; xs++) {
@@ -222,50 +258,14 @@ public class RunGame {
           }
 
     private void initialData(Board b) {
-        monsters = b.getMonsters();
-        traps = b.getTraps();
-        totalEnemies = new LinkedList<>();
-        for (Monster m : monsters) {
-            totalEnemies.addLast(m);
-        }
-        for (Trap t : traps) {
-            totalEnemies.addLast(t);
-        }
+        totalEnemies =b.getEnemies();
         moveOrder.addObservers(p);
-        for (Trap t : traps) {
-            moveOrder.addObservers(t);
-        }
-        for (Monster m : monsters) {
-            moveOrder.addObservers(m);
+        for (Enemy e : totalEnemies) {
+            moveOrder.addObservers(e);
         }
         numOfEnemies = b.getNumOfEnemies();
         pm = new PlayerMovement(p);
     }
-//      public void printErrorMainArg()
-//      {
-//          System.out.println("Please run the code as follows:");
-//          System.out.println("java -jar hw3.jar <Path to directory of files>");
-//      }
-//      public void printEndGame(boolean playerDeath) {
-//          if (playerDeath){
-//              System.out.println("Game over!!!");
-//          }
-//          else {
-//              System.out.println("You won!!!");
-//          }
-//      }
-//      public void printEndLevel(int level)
-//      {
-//          System.out.println("Finish level: " + (level + 1));
-//          System.out.println("-----------------------------------------------------------");
-//          System.out.println("██╗     ███████╗██╗   ██╗███████╗██╗         ██╗   ██╗██████╗ ██╗\n" +
-//                  "██║     ██╔════╝██║   ██║██╔════╝██║         ██║   ██║██╔══██╗██║\n" +
-//                  "██║     █████╗  ██║   ██║█████╗  ██║         ██║   ██║██████╔╝██║\n" +
-//                  "██║     ██╔══╝  ╚██╗ ██╔╝██╔══╝  ██║         ██║   ██║██╔═══╝ ╚═╝\n" +
-//                  "███████╗███████╗ ╚████╔╝ ███████╗███████╗    ╚██████╔╝██║     ██╗\n" +
-//                  "╚══════╝╚══════╝  ╚═══╝  ╚══════╝╚══════╝     ╚═════╝ ╚═╝     ╚═╝\n" );
-//      }
-
 
   }
 

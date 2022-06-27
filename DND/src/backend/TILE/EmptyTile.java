@@ -2,6 +2,7 @@ package backend.TILE;
 
 import backend.Interfaces.Visited;
 import backend.Interfaces.Visitor;
+import backend.UNIT.Tile;
 
 import java.util.LinkedList;
 

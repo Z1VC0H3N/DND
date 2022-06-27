@@ -3,7 +3,7 @@ package backend.Interactions;
 import backend.EnemyTypes.Monster;
 import backend.EnemyTypes.Trap;
 import backend.TILE.EmptyTile;
-import backend.TILE.Tile;
+import backend.UNIT.Tile;
 import backend.TILE.Wall;
 import backend.UNIT.Enemy;
 import backend.UNIT.Player;

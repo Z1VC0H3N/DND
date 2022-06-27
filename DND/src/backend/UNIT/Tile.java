@@ -1,4 +1,4 @@
-package backend.TILE;
+package backend.UNIT;
 
 import backend.Interfaces.Visited;
 import backend.Interfaces.Visitor;
@@ -6,7 +6,7 @@ import backend.UTILITY.Position;
 
 import java.util.LinkedList;
 
-public class Tile implements Visited {
+public abstract class Tile implements Visited {
     protected char tile;
     protected Position position;
     protected String name;

@@ -1,8 +1,8 @@
 package backend.UNIT;
 
-import backend.TILE.Tile;
+import backend.UTILITY.Health;
 
-public class Unit extends Tile {
+public abstract class Unit extends Tile {
     protected Health health;
     protected int attack;
     protected int defense;

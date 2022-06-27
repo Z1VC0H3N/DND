@@ -3,7 +3,7 @@ package backend.EnemyTypes;
 import backend.GAME.Board;
 import backend.Interfaces.Visited;
 import backend.Interfaces.Visitor;
-import backend.TILE.Tile;
+import backend.UNIT.Tile;
 import backend.UNIT.Enemy;
 import backend.UNIT.Player;
 import backend.UTILITY.Position;
@@ -15,8 +15,8 @@ public class Trap extends Enemy implements Visited {
     protected int inVisibilityTime;
     protected int ticksCount=0;
     protected boolean visible=true;
-    public Trap(int x,int y,int healthPool, int attack, int defence, int expValue,int visibilityTime,int inVisibilityTime ) {
-        super(x,y,'Q',"trap",healthPool,healthPool,attack,defence,expValue);
+    public Trap(int x,int y,int healthPool, int attack, int defence, int expValue,int visibilityTime,int inVisibilityTime,char tile,String name ) {
+        super(x,y,tile,name,healthPool,healthPool,attack,defence,expValue);
         this.visibilityTime=visibilityTime;
         this.inVisibilityTime=inVisibilityTime;
     }
@@ -62,9 +62,23 @@ public class Trap extends Enemy implements Visited {
                 +"     VisibilityTime:"+this.visibilityTime+"     InVisibilityTime:"+this.inVisibilityTime;
         return s;
     }
+    public int getTicksCount(){
+        return ticksCount;
+    }
+    public int getVisibilityTime(){
+        return visibilityTime;
+    }
+    public int getInVisibilityTime(){
+        return inVisibilityTime;
+    }
 
     @Override
-    public Position preformMovement(Player p, LinkedList<Tile> board, Board b) {
+    public Position preformMovement(Player p, LinkedList<Tile> board) {
         return this.getPosition();
+    }
+
+    public Object getVisible() {
+        return visible;
+
     }
 }

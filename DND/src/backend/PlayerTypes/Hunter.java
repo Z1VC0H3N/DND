@@ -1,7 +1,7 @@
 package backend.PlayerTypes;
 
 import backend.TILE.EmptyTile;
-import backend.TILE.Tile;
+import backend.UNIT.Tile;
 import backend.UNIT.Enemy;
 import backend.UNIT.Player;
 
@@ -55,7 +55,7 @@ public class Hunter extends Player {
             e.decreaseHealth(damage);
             if(!e.isAlive()) {
                 exp += e.getExperience();
-                swap(this,e,board);
+                castSwap(this,e,board);
                 // we dont swap in special ability, just
                 info = e.death();
                 e.onDeath();
@@ -80,8 +80,7 @@ public class Hunter extends Player {
         return out.substring(0, out.length()-1);
     }
 
-    @Override
-    protected void swap(Player player, Enemy e, LinkedList<Tile> board) {
+        protected void castSwap(Player player, Enemy e, LinkedList<Tile> board) {
             int enemyPos = board.indexOf(e);
             board.remove(e);
             board.add(enemyPos, new EmptyTile(player.getX(), player.getY()));
@@ -98,6 +97,7 @@ public class Hunter extends Player {
            return this.name + "tried to use" +this.specialAbility +" but she doesn't have any arrows to use";
         }
         else{
+            //finding the closet enemy
             for(Enemy e :enemies){
                 if(this.range(e)<=range){
                     range = this.range(e);

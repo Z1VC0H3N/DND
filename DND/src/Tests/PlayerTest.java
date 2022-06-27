@@ -3,7 +3,7 @@ package Tests;
 import backend.EnemyTypes.Monster;
 import backend.Hunters.Ygritte;
 import backend.TILE.EmptyTile;
-import backend.TILE.Tile;
+import backend.UNIT.Tile;
 import backend.UNIT.Enemy;
 import backend.UNIT.Player;
 

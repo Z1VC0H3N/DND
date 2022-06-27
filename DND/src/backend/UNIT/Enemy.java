@@ -2,12 +2,11 @@ package backend.UNIT;
 
 import backend.GAME.Board;
 import backend.Interfaces.DeathCallBack;
-import backend.TILE.Tile;
 import backend.UTILITY.Position;
 
 import java.util.LinkedList;
 
-public class Enemy extends Unit  {
+public abstract class Enemy extends Unit  {
     protected int experience;
     private DeathCallBack deathCallBack;
 
@@ -59,7 +58,7 @@ public class Enemy extends Unit  {
         deathCallBack.call();
     }
 
-    public Position preformMovement(Player p, LinkedList<Tile> board, Board b) {
+    public Position preformMovement(Player p, LinkedList<Tile> board) {
         return null;
     }
 }

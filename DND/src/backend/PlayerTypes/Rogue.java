@@ -83,6 +83,7 @@ public class Rogue extends Player {
         for(Enemy e : inRange){
             ans += cast(e,board) +",";
         }
+        energy =energy-cost;
         return ans.substring(0,ans.length()-1);
     }
 

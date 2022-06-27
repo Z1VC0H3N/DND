@@ -53,7 +53,6 @@ public class MonsterTest {
         }
         EnemyMovement v = new EnemyMovement(m);
         String ans = p.accept(v,b.getBoard());
-
     }
 
 }

@@ -97,6 +97,7 @@ public class Hunter extends Player {
            return this.name + "tried to use" +this.specialAbility +" but she doesn't have any arrows to use";
         }
         else{
+            //finding the closet enemy
             for(Enemy e :enemies){
                 if(this.range(e)<=range){
                     range = this.range(e);

@@ -39,6 +39,7 @@ public class RunGame {
   int time =0;
   int currHealth =0;
   int currDamage =0;
+  boolean cheater =false;
 
     public void startGame(String[] args) throws IOException {
         levelsPath = new File(args[0]);
@@ -113,6 +114,7 @@ public class RunGame {
                         totalEnemies.getFirst().onDeath();
                         p.levelUp();
                     }
+                    cheater=true;
                     break;
                 case "jump":
                     System.out.println("enter location u want to go : example -> 4,5 ");
@@ -120,10 +122,20 @@ public class RunGame {
                     try {
                         int X = Integer.parseInt(jump.substring(0, jump.indexOf(',')));
                         int Y = Integer.parseInt(jump.substring(jump.indexOf(',') + 1));
-                        if (!b.getStringOfTile(X, Y).equals(".")) {
+                        if(X<0|Y<0){
                             System.out.println("U cant go there");
+                            break;
+                        }
+                        else if(X > b.getLength() |Y>=b.getHeight()){
+                            System.out.println("U cant go there");
+                            break;
+                        }
+                        else if (!b.getStringOfTile(X, Y).equals(".")) {
+                            System.out.println("U cant go there");
+                            break;
                         } else {
-                            move = b.swap(X, Y);
+                            System.out.println(b.swap(X, Y));
+                            cheater=true;
                             break;
                         }
                     } catch (Exception e) {
@@ -135,10 +147,12 @@ public class RunGame {
                     currDamage = p.getAttack();
                     p.setHealthAmount(Integer.MAX_VALUE);
                     p.setAttack(Integer.MAX_VALUE);
+                    cheater=true;
                     break;
                 case "level up!":
                     p.setExp(50*p.getLevel());
                     p.levelUp();
+                    cheater=true;
                     break;
                 default:
                     System.out.println("u must peek one character :");
@@ -192,9 +206,12 @@ public class RunGame {
                     b = new Board(levels[levelIdx], p);
                     initialData(b);
                 } else {
-                    int width = 300;
+                    int width = 200;
                     int height = 30;
-
+                    String toPrint ="VICTORY!!!";
+                    if(cheater){
+                        toPrint ="CHEATER!!";
+                    }
                     //BufferedImage image = ImageIO.read(new File("/Users/mkyong/Desktop/logo.jpg"));
                     BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
                     Graphics g = image.getGraphics();
@@ -203,7 +220,7 @@ public class RunGame {
                     Graphics2D graphics = (Graphics2D) g;
                     graphics.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
                             RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-                    graphics.drawString("VICTORY!!! U ROCK!!", 10, 20);
+                    graphics.drawString(toPrint, 10, 20);
                     for (int y = 0; y < height; y++) {
                         StringBuilder sb = new StringBuilder();
                         for (int xs = 0; xs < width; xs++) {

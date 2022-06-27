@@ -104,10 +104,6 @@ public class Warrior extends Player {
         if(this.remainingCooldown>0)
             this.remainingCooldown=remainingCooldown-1;
     }
-    public String attack(){
-        //todo;
-        return "";
-    }
 
     protected void castSwap(Player player, Enemy e, LinkedList<Tile> board) {
         int enemyPos = board.indexOf(e);

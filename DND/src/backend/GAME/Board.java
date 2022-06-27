@@ -1,6 +1,7 @@
 package backend.GAME;
 
 import backend.EnemyTypes.Monster;
+import backend.EnemyTypes.Trap;
 import backend.TILE.*;
 import backend.UNIT.*;
 import backend.UTILITY.Position;
@@ -8,7 +9,7 @@ import backend.Warriors.*;
 import backend.Mages.*;
 import backend.Hunters.*;
 import backend.Rogues.*;
-import backend.TrapsTypes.*;
+
 
 import java.io.*;
 import java.util.LinkedList;
@@ -158,17 +159,17 @@ public class Board {
                 enemies.add(K);
                 return K;
             case ('B'):
-                BonusTrap B =new BonusTrap(x,y);
+                Trap B =new Trap(x,y,1,1,1,250,1,5,'B',"Bonus Trap");
                 B.setDeathCallBack(()->enemies.remove(B));
                 enemies.add(B);
                 return B;
             case ('Q'):
-                QueensTrap q =new QueensTrap(x,y);
+                Trap q =new Trap(x,y,250,50,10,100,3,7,'Q',"Queen’s Trap");
                 q.setDeathCallBack(()->enemies.remove(q));
                 enemies.add(q);
                 return q;
             case ('D'):
-                DeathTrap d =new DeathTrap(x,y);
+                Trap d =new Trap(x,y,500,100,20,250,1,10,'D',"Death Trap");
                 d.setDeathCallBack(()-> enemies.remove(d));
                 enemies.add(d);
                 return d;
@@ -218,9 +219,6 @@ public class Board {
     }
 
     public String swap(int x, int y) {
-        if(x > this.length| y>=this.height){
-            return "bad location";
-        }
         int playerPos = length*hero.getY()+hero.getX();
         units.remove(hero);
         units.add(playerPos, new EmptyTile(hero.getX(), hero.getY()));
@@ -234,5 +232,11 @@ public class Board {
 
     public LinkedList<Enemy> getEnemies() {
         return enemies;
+    }
+    public int getLength(){
+        return length;
+    }
+    public int getHeight(){
+        return height;
     }
 }

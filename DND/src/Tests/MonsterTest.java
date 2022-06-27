@@ -32,12 +32,12 @@ public class MonsterTest {
     @Test
     public void preformMovement() {
         //once using dijkstra
-        Position pos =m.preformMovement(p,b.getBoard(),b);
+        Position pos =m.preformMovement(p,b.getBoard());
         assertEquals(3,pos.getX());
         assertEquals(9,pos.getY());
         b.swap(4,10);
         // once find is he very close - close method
-        pos =m.preformMovement(p,b.getBoard(),b);
+        pos =m.preformMovement(p,b.getBoard());
         assertEquals(4,pos.getX());
         assertEquals(10,pos.getY());
     }

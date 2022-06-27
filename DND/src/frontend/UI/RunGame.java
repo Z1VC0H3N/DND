@@ -180,7 +180,7 @@ public class RunGame {
             // now we preform an enemy movement
             for (Enemy e : totalEnemies) {
                 EnemyMovement em = new EnemyMovement(e);
-                Position pos = e.preformMovement(p, b.getBoard(), b); // using dijkstra
+                Position pos = e.preformMovement(p, b.getBoard()); // using dijkstra
                 v = b.getTile(pos.getX(), pos.getY());
                 move = moveOrder.move(em, v, b.getBoard());
                 if (!move.equals("")) {

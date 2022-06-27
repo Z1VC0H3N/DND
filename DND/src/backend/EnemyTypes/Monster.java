@@ -1,6 +1,4 @@
 package backend.EnemyTypes;
-
-import backend.GAME.Board;
 import backend.Interfaces.Visited;
 import backend.Interfaces.Visitor;
 import backend.UNIT.Tile;
@@ -29,7 +27,7 @@ public class Monster extends Enemy implements Visited {
     public void gameTick() {
 
     }
-    public Position preformMovement(Player p,LinkedList<Tile> board, Board game){
+    public Position preformMovement(Player p,LinkedList<Tile> board){
       if(this.range(p)<visionRange){
           Position pos =close(p,board);
           if(pos!=null){
@@ -53,21 +51,30 @@ public class Monster extends Enemy implements Visited {
             case 0:
                 return this.getPosition();
             case 1://up
-                if (!game.getStringOfTile(this.getX() , this.getY()-1).equals("#"))
+                if (!isWall(this.getX() , this.getY()-1,board))
                     return new Position(this.getX() , this.getY()-1);
             case 2://right
-                if(!game.getStringOfTile(this.getX()+1 , this.getY()).equals("#"))
+                if(!isWall(this.getX()+1 , this.getY(),board))
                     return new Position(this.getX() +1, this.getY());
             case 3://down
-                if(!game.getStringOfTile(this.getX(), this.getY()+1).equals("#"))
+                if(!isWall(this.getX(), this.getY()+1,board))
                     return new Position(this.getX(), this.getY()+1);
             case 4://left
-                if(!game.getStringOfTile(this.getX() -1, this.getY()).equals("#"))
+                if(!isWall(this.getX() -1, this.getY(),board))
                     return new Position(this.getX()-1 , this.getY());
         }
       return this.position;
     }
-
+private boolean isWall(int x,int y,LinkedList<Tile> board){
+        for(Tile t:board){
+            if(t.getX() == x){
+                if(t.getY() ==y){
+                    return t.toString().equals("#");
+                }
+            }
+        }
+        return false;
+}
     private Position close(Player p, LinkedList<Tile> board) {
         for(Tile t: board){
             if(this.range(t)<=1 & t.getPosition().equals(p.getPosition())){

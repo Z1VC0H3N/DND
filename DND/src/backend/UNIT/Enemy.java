@@ -58,7 +58,7 @@ public abstract class Enemy extends Unit  {
         deathCallBack.call();
     }
 
-    public Position preformMovement(Player p, LinkedList<Tile> board, Board b) {
+    public Position preformMovement(Player p, LinkedList<Tile> board) {
         return null;
     }
 }

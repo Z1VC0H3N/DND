@@ -2,7 +2,6 @@ package Tests;
 
 import backend.EnemyTypes.Monster;
 import backend.GAME.Board;
-import backend.Hunters.Ygritte;
 import backend.Interactions.EnemyMovement;
 import backend.UNIT.Enemy;
 import backend.UNIT.Player;

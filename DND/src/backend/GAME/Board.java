@@ -2,13 +2,13 @@ package backend.GAME;
 
 import backend.EnemyTypes.Monster;
 import backend.EnemyTypes.Trap;
+import backend.PlayerTypes.Hunter;
+import backend.PlayerTypes.Mage;
+import backend.PlayerTypes.Rogue;
+import backend.PlayerTypes.Warrior;
 import backend.TILE.*;
 import backend.UNIT.*;
 import backend.UTILITY.Position;
-import backend.Warriors.*;
-import backend.Mages.*;
-import backend.Hunters.*;
-import backend.Rogues.*;
 
 
 import java.io.*;
@@ -45,20 +45,20 @@ public class Board {
     public Player chooseHero(int numOfPlayer, int x, int y) {
         switch (numOfPlayer) {
             case (1):
-                return new JonSnow(x,y);
+                return new Warrior(x, y, "Jon Snow", 300, 300, 30, 4, 3);
             case (2):
-                return new TheHound(x,y);
+                return new Warrior(x, y, "The Hound", 400, 400, 20, 6, 5);
             case (3):
-                return new Melisandre(x,y);
+                return new Mage(x, y, "Melisandre", 100, 100, 5, 1, 300, 30, 15, 5, 6);
             case (4):
-                return new ThorosOfMyr(x,y);
+                return new Mage(x, y, "Thoros of Myr", 250, 250, 25, 4, 150, 20, 20, 3, 4);
             case (5):
-                return new AryaStark(x,y);
+                return new Rogue(x, y, "Arya Stark", 250, 250, 40, 2, 20);
             case (6):
-                return new Bronn(x,y);
+                return new Rogue(x, y, "Bronn", 250, 250, 35, 3, 50);
             case (7):
-                return new Ygritte(x,y);
-                // needs to add to the hero the location;
+                return new Hunter(x, y, "Ygritte", 250, 250, 30, 2, 6);
+
         }
         return null;
     }
@@ -111,7 +111,7 @@ public class Board {
                 Monster l = new Monster(x,y,80,8,3,25,3,'s',"Lannister Solider");
                 l.setDeathCallBack(()->{enemies.remove(l);
                 });
-                enemies.add(l);// dont know why maybe we will know
+                enemies.add(l);
                 return l;
             case ('k'):
                 Monster k =new Monster(x,y,200,14,8,50,4,'k',"Lannister Knight");

@@ -1,5 +1,4 @@
 package backend.Interactions;
-
 import backend.Interfaces.Visited;
 import backend.Interfaces.Visitor;
 import backend.UNIT.Tile;

@@ -1,7 +1,7 @@
 package Tests;
 
 import backend.EnemyTypes.Monster;
-import backend.Hunters.Ygritte;
+import backend.PlayerTypes.Hunter;
 import backend.TILE.EmptyTile;
 import backend.UNIT.Tile;
 import backend.UNIT.Enemy;
@@ -13,14 +13,14 @@ import static org.junit.Assert.*;
 
 public class PlayerTest {
 
-    private Player p = new Ygritte(1,2);
+    private Player p =new Hunter(1, 2, "Ygritte", 250, 250, 30, 2, 6);
     private Monster s =new Monster(2,2,80,8,3,25,3,'s',"Lannister Solider");
     private LinkedList<Enemy> enemies =new LinkedList<>();
     private LinkedList<Tile> board =new LinkedList<>();
 
     @org.junit.Before
     public void setUp() throws Exception {
-        p = new Ygritte(5,5);
+        p =  new Hunter(5,5, "Ygritte", 250, 250, 30, 2, 6);
         s =new Monster(2,2,80,8,3,25,3,'s',"Lannister Solider");
         s.setDeathCallBack(()->board.remove(s));
         for(int y =0;y<5;y++) {
@@ -62,7 +62,7 @@ public class PlayerTest {
             p.onAbilityCastAttempt(enemies,board);
             assertTrue(s.getHealthAmount() <= health);
         }
-        assertEquals(board.get(12), p);
+        assertEquals(board.get(12).getSign(), '.');
         assertFalse(board.contains(s));
     }
 

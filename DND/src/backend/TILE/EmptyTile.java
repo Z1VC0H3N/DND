@@ -14,6 +14,5 @@ public class EmptyTile extends Tile implements Visited {
     public String accept(Visitor v, LinkedList<Tile> board) {
         String s=v.visit(this, board);
         return s;
-
     }
 }

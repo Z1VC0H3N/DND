@@ -17,7 +17,6 @@ public class EnemyTest {
     private Player p =  new Hunter(1, 2, "Ygritte", 250, 250, 30, 2, 6);
     private Monster s =new Monster(2,2,80,8,3,25,3,'s',"Lannister Solider");
     private LinkedList<Enemy> enemies =new LinkedList<>();
-
     private LinkedList<Tile> board =new LinkedList<>();
     @Before
     public void setUp() throws Exception {
